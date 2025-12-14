@@ -6,7 +6,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LogOut } from "lucide-react"
+import { CircleUser, LogOut } from "lucide-react"
+import Link from "next/link"
 
 export function ProfileMenu() {
   return (
@@ -30,7 +31,9 @@ export function ProfileMenu() {
             </div>
           </div>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <Link href="/dashboard/profile">
+          <DropdownMenuItem><CircleUser/> Profile</DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Team</DropdownMenuItem>
           <DropdownMenuItem>Subscription</DropdownMenuItem>

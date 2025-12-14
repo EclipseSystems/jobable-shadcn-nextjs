@@ -1,5 +1,18 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Project Synopsis
+
+This project was developed using the following:
+- **Next.js 16.0.8** - Javascript framework
+- **Next.js App Router** - page routing
+- **Shadcn UI v4** - components
+- **Lucide v0.556.0** - icons
+- **Tailwind CSS v4** - CSS framework
+- **TanStack Table v8** - data tables
+- **Faker 10.1.0** - fake data generation
+- **Prettier 3.7.4** - code formatting
+- **TBA** - authentication
+
 ## Getting Started
 
 First, run the development server:

@@ -1,47 +1,69 @@
+"use client"
+
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { buttonVariants } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+
+import { DollarSign, Lock, Users } from "lucide-react";
+
+const links = [
+  { name: 'User management', url: '/dashboard/admin/users', icon: Users },
+  { name: 'Billing', url: '/dashboard/admin/billing', icon: DollarSign },
+  { name: 'Security', url: '/dashboard/admin/security', icon: Lock }
+]
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className='size-full'>
-      {/* Heading */}
-      <div className="border-border bg-background border-b">
-        <div className="container mx-auto flex flex-col px-4 py-4 md:px-6 md:py-6">
-          <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
-            <div className="space-y-2">
-              <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Settings</h1>
+    <>
+      <Card>
+        <CardContent>
+          <div className="space-y-0.5">
+            <h1 className="text-2xl font-bold tracking-tight">
+              Settings
+            </h1>
+            <p className="text-muted-foreground">
+              Manage your account settings and set e-mail preferences.
+            </p>
+          </div>
+          <Separator className="my-4 lg:my-6" />
+          <div className="flex flex-1 flex-col space-y-2 overflow-hidden md:space-y-2 lg:flex-row lg:space-y-0 lg:space-x-12">
+            <aside className="top-0 lg:sticky lg:w-1/5">
+
+              {/* Sidebar nav */}
+              <ScrollArea
+                type="always"
+                className='bg-card hidden w-full min-w-40 px-1 py-2 md:block'
+              >
+                <nav className="flex space-x-2 py-1 lg:flex-col lg:space-y-1 lg:space-x-0">
+                  {links.map((link) => (
+                    <Link
+                      href={link.url}
+                      className={cn(
+                        buttonVariants({ variant: 'ghost' }),
+                        usePathname() === link.url
+                          ? 'bg-muted hover:bg-accent'
+                          : 'hover:bg-accent hover:underline',
+                        'justify-start'
+                      )}>
+                      <span className="me-2"><link.icon /></span>
+                      {link.name}
+                    </Link>
+                  ))}
+                </nav>
+              </ScrollArea>
+
+            </aside>
+            <div className="flex w-full overflow-y-hidden p-1">
+              {children}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Main section */}
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row">
-          <aside className="border-border hidden w-64 border-r py-6 pr-6 md:block">
-            <ul className="-ml-3 space-y-1">
-              <li className="bg-accent-foreground/5 text-accent-foreground hover:bg-accent-foreground/10 cursor-pointer rounded-md px-3 py-2 text-sm font-medium">
-                <a>Profile</a>
-              </li>
-              <li className="text-muted-foreground hover:bg-accent-foreground/10 cursor-pointer rounded-md px-3 py-2 text-sm font-medium">
-                <a>Account</a>
-              </li>
-              <li className="text-muted-foreground hover:bg-accent-foreground/10 cursor-pointer rounded-md px-3 py-2 text-sm font-medium">
-                <a>Members</a>
-              </li>
-              <li className="text-muted-foreground hover:bg-accent-foreground/10 cursor-pointer rounded-md px-3 py-2 text-sm font-medium">
-                <a>Billing</a>
-              </li>
-              <li className="text-muted-foreground hover:bg-accent-foreground/10 cursor-pointer rounded-md px-3 py-2 text-sm font-medium">
-                <a>Invoices</a>
-              </li>
-              <li className="text-muted-foreground hover:bg-accent-foreground/10 cursor-pointer rounded-md px-3 py-2 text-sm font-medium">
-                <a>API</a>
-              </li>
-            </ul>
-          </aside>
-          <main className="flex-1">
-            {children}
-          </main>
-        </div>
-      </div>
-    </div>
-  )
+        </CardContent>
+      </Card>
+    </>
+  );
 }

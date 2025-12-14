@@ -1,15 +1,26 @@
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import Header from "@/components/layout/header"
+import Image from "next/image"
+import { useTheme } from "next-themes"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarInset>
+      <main className="w-full">
+        <Image
+          alt="Randomized pattern"
+          src="/pattern-randomized.svg"
+          className="dark:invert"
+          fill
+          quality={100}
+          sizes="100vw"
+          style={{ objectFit: "cover" }}
+        />
+        <SidebarInset className="bg-transparent">
           <Header />
-          <div className="h-full p-4 md:p-6">
+          <div className="m-5">
             {children}
           </div>
         </SidebarInset>
