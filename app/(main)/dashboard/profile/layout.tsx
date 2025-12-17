@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 const links = [
-  { name: 'User details', url: '/dashboard/profile/details', icon: CircleUser },
+  { name: 'User profile', url: '/dashboard/profile/details', icon: CircleUser },
   { name: 'Security', url: '/dashboard/profile/security', icon: Lock }
 ]
 

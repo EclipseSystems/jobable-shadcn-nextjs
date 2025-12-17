@@ -16,6 +16,7 @@ import { DataTableViewOptions } from "@/components/data-table/column-toggle";
 import { FilterSheet } from "@/components/modals/filter-sheet"
 import { PageTitle } from "@/components/layout/formatting"
 import { RowDensity } from "@/components/data-table/row-density";
+import { AddLead } from "@/components/modals/add-lead";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -59,18 +60,28 @@ function DataTable<TData, TValue>({
 }
 
 export default function Page() {
+  const [leadOpen, setLeadOpen] = useState(false)
+
   return (
     <>
       <Card>
         <CardContent>
           <div className="flex items-center mb-4">
             <PageTitle title={'Leads'}/>
-            <Button className="mr-2 shadow-md" variant="outline" size="icon"><Plus /></Button>
+            <Button
+              onClick={() => setLeadOpen(true)}
+              className="mr-2 shadow-md"
+              variant="outline"
+              size="icon"
+            >
+              <Plus />
+            </Button>
             <FilterSheet />
           </div>
           <DataTable columns={leadColumns} data={leadData} />
         </CardContent>
       </Card>
+      <AddLead isOpen={leadOpen} onClose={() => setLeadOpen(false)}/>
     </>
   );
 }

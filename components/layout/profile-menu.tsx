@@ -9,17 +9,17 @@ import {
 import { CircleUser, LogOut } from "lucide-react"
 import Link from "next/link"
 
-export function ProfileMenu() {
+export function ProfileMenu({ className, ...props }: { className?: string }) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger className={className} {...props}>
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent align="end">
           <div className="flex w-full items-center justify-between gap-2 px-1 py-1.5">
             <Avatar className="size-9 rounded-lg">
               <AvatarImage src="https://github.com/shadcn.png" />

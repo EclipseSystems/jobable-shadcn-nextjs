@@ -19,8 +19,7 @@ export function IconTTButton({url, title, Icon} : {
         <TooltipTrigger asChild>
           <Link href={url}>
             <Button
-              className="shadow-md"
-              variant="outline"
+              variant="ghost"
               size="icon"
             >
               <Icon />

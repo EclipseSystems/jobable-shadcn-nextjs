@@ -1,7 +1,9 @@
+import { Heading } from "@/components/layout/formatting";
+
 export default function Page() {
   return (
     <>
-      <h1 className="text-xl font-bold">Security</h1>
+      <Heading title="Security" />
     </>
   )
 }

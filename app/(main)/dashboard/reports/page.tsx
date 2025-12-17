@@ -1,3 +1,4 @@
+import { PageTitle } from "@/components/layout/formatting"
 import {
   Card,
   CardContent,
@@ -8,7 +9,7 @@ export default function Page() {
     <>
     <Card>
       <CardContent>
-        <p className="text-2xl font-bold tracking-tight">Reports</p>
+        <PageTitle title="Reports"/>
       </CardContent>
     </Card>
     </>

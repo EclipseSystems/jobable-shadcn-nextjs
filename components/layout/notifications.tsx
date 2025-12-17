@@ -22,7 +22,7 @@ export function Notifications() {
       <SheetTrigger>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger><Button size="icon" className="shadow-md" variant="outline"><Bell /></Button></TooltipTrigger>
+            <TooltipTrigger><Button size="icon" variant="ghost"><Bell /></Button></TooltipTrigger>
             <TooltipContent>
               <p>Notifications</p>
             </TooltipContent>

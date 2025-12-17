@@ -1,3 +1,4 @@
+import { Heading, SubHeading } from "@/components/layout/formatting"
 import { ResetPassword } from "@/components/modals/reset-password"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table"
@@ -13,11 +14,11 @@ export default function Page() {
   return (
     <>
       <div className="flex-row w-full space-y-4">
-        <h1 className="text-xl font-bold">Security</h1>
-        <h1 className="text-md font-medium">Password</h1>
+        <Heading title="Secuirty" />
+        <SubHeading title="Password" />
         <ResetPassword/>
         <p className="text-sm">Last reset date: 1 December 2025, 4:24PM</p>
-        <h1 className="text-md font-medium">Authentication methods</h1>
+        <SubHeading title="Authentication methods" />
         <Table>
           <TableBody>
             {auth.map((item) => (

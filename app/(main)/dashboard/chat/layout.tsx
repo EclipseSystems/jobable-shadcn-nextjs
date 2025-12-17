@@ -3,34 +3,28 @@ import { PageTitle } from "@/components/layout/formatting"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { faker } from "@faker-js/faker"
 import { Search } from "lucide-react"
-import { minify } from "next/dist/build/swc/generated-native"
 
 function generateHistory() {
   const rows = [];
   for (let i = 0; i < 10; i++) {
+    const fullName = [faker.person.firstName(),faker.person.lastName()]
     rows.push(
       <li className="w-full flex items-center gap-3">
         <Avatar>
-          <AvatarFallback></AvatarFallback>
+          <AvatarFallback>
+            {fullName[0][0]}
+            {fullName[1][0]}
+          </AvatarFallback>
         </Avatar>
-        <div className="h-11 w-full grid grid-cols-3 gap-x-4">
+        <div className="h-content w-full grid grid-cols-3 gap-x-4">
           <div className="col-span-2 grid">
-            <span className="truncate">{faker.person.fullName()}</span>
+            <span className="text-sm font-semibold truncate">{fullName[0].concat(' ',fullName[1])}</span>
             <span className="text-xs truncate">{faker.lorem.sentence(4)}</span>
           </div>
           <div className="col-span-1">
-            <p className="text-xs">
+            <p className="text-muted-foreground text-xs">
               {faker.number.int({min:1,max:7})} day ago
             </p>
           </div>

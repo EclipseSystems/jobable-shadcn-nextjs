@@ -1,5 +1,6 @@
 "use client";
 
+import { faker } from "@faker-js/faker";
 import { useState } from "react";
 
 import { PageTitle } from "@/components/layout/formatting";
@@ -7,6 +8,7 @@ import { PageTitle } from "@/components/layout/formatting";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Drawer,
@@ -19,6 +21,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -32,8 +35,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 
-import { faker } from "@faker-js/faker";
 import {
   ChevronDownIcon,
   Ellipsis,
@@ -46,9 +49,7 @@ import {
   Star,
   Tag,
 } from "lucide-react";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
-import { Textarea } from "@/components/ui/textarea";
+import { NewLabel } from "./_components/new-label";
 
 const folders = [
   { icon: Inbox, name: "Inbox", number: 7 },
@@ -99,6 +100,7 @@ function generateRows() {
 }
 
 export default function Page() {
+  const [newLabelOpen, setNewLabelOpen] = useState(false);
   const [showNewEmail, setShowNewEmail] = useState(false);
 
   return (
@@ -119,11 +121,13 @@ export default function Page() {
                   <DropdownMenuItem onSelect={() => setShowNewEmail(true)}>
                     <Mail /> New email
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setNewLabelOpen(true)}>
                     <Tag /> New label
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {/* New email drawer */}
               <Drawer open={showNewEmail} onOpenChange={setShowNewEmail}>
                 <DrawerContent>
                   <DrawerHeader>
@@ -135,15 +139,18 @@ export default function Page() {
                     <div className="col-span-1 space-y-3">
                       <Label>To:</Label>
                       <Input type="email" />
+                      {/* ADD ADDRESS BOOK */}
                       <Label>CC:</Label>
                       <Input type="text" />
                       <Label>BCC:</Label>
                       <Input type="text" />
                       <Label>Subject:</Label>
                       <Input type="text" />
+                      {/* ADD SUGGESTIONS */}
+                      {/* ADD ATTACHMENTS */}
                     </div>
                     <div className="col-span-3">
-                      <Textarea/>
+                      <Textarea />
                     </div>
                   </div>
 
@@ -156,7 +163,10 @@ export default function Page() {
                             <ChevronDownIcon />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="[--radius:1rem]">
+                        <DropdownMenuContent
+                          align="end"
+                          className="[--radius:1rem]"
+                        >
                           <DropdownMenuGroup>
                             <DropdownMenuItem>
                               <Send />
@@ -170,7 +180,7 @@ export default function Page() {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </ButtonGroup>
-                    <DrawerClose asChild>
+                    <DrawerClose>
                       <Button variant={"outline"}>Cancel</Button>
                     </DrawerClose>
                   </DrawerFooter>
@@ -215,6 +225,7 @@ export default function Page() {
           </div>
         </CardContent>
       </Card>
+      <NewLabel isOpen={newLabelOpen} onClose={() => setNewLabelOpen(false)} />
     </>
   );
 }
