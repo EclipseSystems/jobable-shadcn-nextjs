@@ -22,7 +22,7 @@ export function AddContact({ isOpen, onClose }: AddContactProps) {
         </DialogHeader>
         <DialogFooter>
           <DialogClose>
-            <Button variant="secondary" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </DialogClose>

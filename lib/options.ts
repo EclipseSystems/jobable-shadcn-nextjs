@@ -1,3 +1,5 @@
+import { CircleSmall, Siren } from "lucide-react";
+
 export const states = [
   { value: "act", name: "Australian Capital Territory" },
   { value: "nsw", name: "New South Wales" },
@@ -8,6 +10,13 @@ export const states = [
   { value: "vic", name: "Victoria" },
   { value: "wa", name: "Western Australia" },
 ];
+
+export const severity = [
+  { value: "critical", label: "Critical (1-8 hours)", icon: Siren, color: "text-red-500" },
+  { value: "high", label: "High (8-24 hours)", icon: CircleSmall, color: "text-amber-500" },
+  { value: "medium", label: "Medium (1-3 days)", icon: CircleSmall, color: "text-yellow-500" },
+  { value: "low", label: "Low (3-7 days)", icon: CircleSmall, color: "text-green-500" }
+]
 
 export const timezones = [
   { value: "AWST", name: "Australian Western Standard Time (UTC +08:00)"},

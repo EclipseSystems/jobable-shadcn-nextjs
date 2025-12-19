@@ -129,7 +129,7 @@ export function AddOrganisation({ isOpen, onClose }: AddOrgProps) {
 
         <DialogFooter>
           <DialogClose>
-            <Button variant="secondary" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </DialogClose>

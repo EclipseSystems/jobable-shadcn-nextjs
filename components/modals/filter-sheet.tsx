@@ -21,7 +21,6 @@ import {
 
 import { Filter } from "lucide-react"
 import { Label } from "../ui/label";
-import { Table } from "@tanstack/react-table";
 
 function AccItem({ key, value, name, children }: {
   key: number
@@ -109,7 +108,7 @@ export function FilterSheet() {
           <SheetFooter>
             <Button type="submit">Save changes</Button>
             <SheetClose asChild>
-              <Button variant="secondary">Close</Button>
+              <Button variant="outline">Close</Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

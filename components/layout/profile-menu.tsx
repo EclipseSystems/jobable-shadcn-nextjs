@@ -1,13 +1,13 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { CircleUser, LogOut } from "lucide-react"
-import Link from "next/link"
+} from "@/components/ui/dropdown-menu";
+import { CircleUser, LogOut } from "lucide-react";
+import Link from "next/link";
 
 export function ProfileMenu({ className, ...props }: { className?: string }) {
   return (
@@ -27,20 +27,28 @@ export function ProfileMenu({ className, ...props }: { className?: string }) {
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">Mitchell Nugent</span>
-              <span className="truncate text-xs capitalize">Systems Analyst</span>
+              <span className="truncate text-xs capitalize">
+                Systems Analyst
+              </span>
             </div>
           </div>
           <DropdownMenuSeparator />
           <Link href="/dashboard/profile">
-          <DropdownMenuItem><CircleUser/> Profile</DropdownMenuItem>
+            <DropdownMenuItem>
+              <CircleUser /> Profile
+            </DropdownMenuItem>
           </Link>
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Team</DropdownMenuItem>
           <DropdownMenuItem>Subscription</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem><LogOut /> Log out</DropdownMenuItem>
+          <Link href="/">
+            <DropdownMenuItem>
+              <LogOut /> Log out
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  )
+  );
 }

@@ -8,25 +8,14 @@ import { PageTitle } from "@/components/layout/formatting";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -35,21 +24,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Textarea } from "@/components/ui/textarea";
 
 import {
-  ChevronDownIcon,
   Ellipsis,
   Inbox,
   Mail,
   Pencil,
-  SaveIcon,
   Search,
   Send,
   Star,
   Tag,
 } from "lucide-react";
 import { NewLabel } from "./_components/new-label";
+import { NewEmail } from "./_components/new-email";
 
 const folders = [
   { icon: Inbox, name: "Inbox", number: 7 },
@@ -128,64 +115,7 @@ export default function Page() {
               </DropdownMenu>
 
               {/* New email drawer */}
-              <Drawer open={showNewEmail} onOpenChange={setShowNewEmail}>
-                <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>New email</DrawerTitle>
-                  </DrawerHeader>
-
-                  {/* Main content */}
-                  <div className="grid grid-cols-4 px-6 gap-4">
-                    <div className="col-span-1 space-y-3">
-                      <Label>To:</Label>
-                      <Input type="email" />
-                      {/* ADD ADDRESS BOOK */}
-                      <Label>CC:</Label>
-                      <Input type="text" />
-                      <Label>BCC:</Label>
-                      <Input type="text" />
-                      <Label>Subject:</Label>
-                      <Input type="text" />
-                      {/* ADD SUGGESTIONS */}
-                      {/* ADD ATTACHMENTS */}
-                    </div>
-                    <div className="col-span-3">
-                      <Textarea />
-                    </div>
-                  </div>
-
-                  <DrawerFooter className="flex flex-row justify-center">
-                    <ButtonGroup>
-                      <Button>Send</Button>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button className="pl-2!">
-                            <ChevronDownIcon />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                          align="end"
-                          className="[--radius:1rem]"
-                        >
-                          <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                              <Send />
-                              Send
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <SaveIcon />
-                              Save as draft
-                            </DropdownMenuItem>
-                          </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </ButtonGroup>
-                    <DrawerClose>
-                      <Button variant={"outline"}>Cancel</Button>
-                    </DrawerClose>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
+              <NewEmail isOpen={showNewEmail} onClose={() => setShowNewEmail(false)}/>
 
               <nav className="space-y-1.5">
                 {folders.map((folder) => (

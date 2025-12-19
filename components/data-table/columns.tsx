@@ -10,8 +10,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { DoorOpen, Ellipsis, Phone, User } from "lucide-react";
+import { CircleCheck, CircleX, DoorOpen, Ellipsis, LoaderCircle, Phone, User } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
+import { TaskActions } from "@/app/(main)/dashboard/tasks/_components/task-actions";
+import { table } from "console";
 
 export type Appointments = {
   id: number;
@@ -57,14 +59,14 @@ export type Clients = {
   name: string;
   gender: string;
   birthDate: string;
-}
+};
 
 export const clientColumns: ColumnDef<Clients>[] = [
-  { accessorKey: 'id', header: 'ID'},
-  { accessorKey: 'name', header: 'Name'},
-  { accessorKey: 'gender', header: 'Gender'},
-  { accessorKey: 'birthDate', header: 'Date of birth'}
-]
+  { accessorKey: "id", header: "ID" },
+  { accessorKey: "name", header: "Name" },
+  { accessorKey: "gender", header: "Gender" },
+  { accessorKey: "birthDate", header: "Date of birth" },
+];
 
 export type Leads = {
   id: number;
@@ -149,9 +151,9 @@ export type Organisations = {
   tradingAs: string;
   city: string;
   sector: string;
-  noOfEmp: number
+  noOfEmp: number;
   mainContact: string;
-}
+};
 
 export const orgColumns: ColumnDef<Organisations>[] = [
   { accessorKey: "id", header: "ID" },
@@ -161,4 +163,98 @@ export const orgColumns: ColumnDef<Organisations>[] = [
   { accessorKey: "sector", header: "Sector" },
   { accessorKey: "noOfEmp", header: "Employees" },
   { accessorKey: "mainContact", header: "Main contact" },
-]
+];
+
+export type Tasks = {
+  id: number;
+  title: string;
+  column: string;
+  priority: string;
+  status: string;
+  dueDate: string;
+  tags: Array<string>;
+};
+
+export const taskColumns: ColumnDef<Tasks>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+  },
+  { accessorKey: "id", header: "ID" },
+  {
+    accessorKey: "title",
+    header: "Title",
+    cell: ({ row }) => {
+      return (
+        <div className="flex gap-2 items-center">
+          {row.getValue("title")}
+          <TaskActions />
+        </div>
+      );
+    },
+  },
+  { accessorKey: "column", header: "Column" },
+  {
+    accessorKey: "priority",
+    header: "Priority",
+    cell: ({ row }) => {
+      return (
+        <Badge
+          variant={
+            row.getValue("priority") === "high"
+              ? "destructive"
+              : row.getValue("priority") === "medium"
+                ? "default"
+                : "secondary"
+          }
+        >
+          <p className="capitalize">{row.getValue("priority")}</p>
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "status", header: "Status",
+    cell: ({ row }) => {
+      return (
+        <Badge
+          variant={row.getValue("status") === "Not started" ? "destructive" : row.getValue("status") === "Done" ? "outline" : "secondary"}
+        >
+          {row.getValue("status") === "Not started" ? <CircleX /> : row.getValue("status") === "Done" ? <CircleCheck /> : <LoaderCircle />}
+          {row.getValue("status")}
+        </Badge>
+      );
+    },
+  },
+  { accessorKey: "dueDate", header: "Due date" },
+  {
+    accessorKey: "tags",
+    header: "Tags",
+    cell: ({ row }) => {
+      const array = row.getValue("tags".toString())
+      return (
+        <div className="flex gap-1">
+          {String(array).split(',').map((tag) => (
+            <Badge>{tag}</Badge>
+          ))}
+        </div>
+      );
+    }
+  },
+];

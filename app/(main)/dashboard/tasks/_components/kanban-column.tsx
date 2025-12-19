@@ -62,7 +62,7 @@ export function TaskColumn({ value, tasks, ...props }: TaskColumnProps) {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex flex-col gap-2 p-0.5">
+      <div className="flex flex-col gap-2">
         {tasks.map((task) => (
           <TaskCard key={task.id} task={task} asHandle />
         ))}

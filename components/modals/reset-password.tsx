@@ -27,7 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import { Key, Phone, QrCode } from "lucide-react"
 
 const pages = [
@@ -47,7 +46,6 @@ export function ResetPassword() {
   }
 
   const [timeLeft, setTimeLeft] = useState(30)
-  const id = useId()
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -93,7 +91,7 @@ export function ResetPassword() {
                 value={method}
                 onValueChange={handleMethodSet}
               >
-                <SelectTrigger className="w-[250px]">
+                <SelectTrigger className="w-62.5">
                   <SelectValue placeholder="Select a method..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -178,11 +176,11 @@ export function ResetPassword() {
           )}
           <DialogFooter>
             <DialogClose>
-              <Button variant={"secondary"}>Cancel</Button>
+              <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
             <Button hidden={step == 0} onClick={prevStep}>Prev</Button>
             <Button onClick={nextStep}>
-              {step === pages.length - 1 ? 'Submit' : 'Next'}</Button>
+              {step === pages.length - 1 ? 'Finish' : 'Next'}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

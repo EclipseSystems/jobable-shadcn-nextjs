@@ -49,12 +49,12 @@ export function AddLead({ isOpen, onClose }: AddLeadProps) {
               <Field>
                 <FieldLabel>State</FieldLabel>
                 <Select>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger>
                     <SelectValue placeholder="Select a state" />
                   </SelectTrigger>
                   <SelectContent>
                     {states.map((state) => (
-                      <SelectItem value={state.value}>{state.name}</SelectItem>
+                      <SelectItem key={state.value} value={state.value}>{state.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -75,7 +75,7 @@ export function AddLead({ isOpen, onClose }: AddLeadProps) {
           </FieldSet>
           <DialogFooter>
             <DialogClose>
-              <Button onClick={onClose} variant="secondary">
+              <Button onClick={onClose} variant="outline">
                 Cancel
               </Button>
             </DialogClose>

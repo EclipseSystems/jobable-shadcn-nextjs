@@ -22,7 +22,7 @@ export function AddClient({ isOpen, onClose }: AddClientProps) {
         </DialogHeader>
         <DialogFooter>
           <DialogClose>
-            <Button variant="secondary" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </DialogClose>

@@ -10,12 +10,13 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import RichTextEditor from "@/components/editor/rich-text-editor";
 
 function generateRows() {
   const rows = [];
   for (let i = 0; i < 20; i++) {
     rows.push(
-      <TableRow>
+      <TableRow key={i}>
         <TableCell>
           <Checkbox />
         </TableCell>
@@ -36,14 +37,16 @@ export default function Page() {
             <PageTitle title="Diary" />
             <Button size="sm">Add entry</Button>
             <div className="w-full grid grid-cols-2">
-              <div className="col-span-1">
+              <div className="col-span-1 border-r pr-4">
                 <Table>
                   <TableBody>
                     {generateRows()}
                   </TableBody>
                 </Table>
               </div>
-              <div className="col-span-1"></div>
+              <div className="col-span-1 pl-4">
+                <RichTextEditor />
+              </div>
             </div>
           </div>
         </CardContent>

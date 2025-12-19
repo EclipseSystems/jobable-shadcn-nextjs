@@ -42,16 +42,9 @@ export default function Header() {
         />
 
         <div className="flex items-center gap-1 w-full">
-          {/* Theme toggle */}
           <ThemeToggle />
-
-					{/* Diary */}
 					<IconTTButton url="/dashboard/diary" title="Diary" Icon={BookOpen} />
-
-          {/* Tasks */}
           <IconTTButton url="/dashboard/tasks" title="Tasks" Icon={ListCheck} />
-
-          {/* Notifications */}
           <Notifications />
 
           {/* Help center */}

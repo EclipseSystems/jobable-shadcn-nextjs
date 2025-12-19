@@ -1,8 +1,12 @@
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/layout/app-sidebar"
-import Header from "@/components/layout/header"
-import Image from "next/image"
-import { useTheme } from "next-themes"
+import Image from "next/image";
+
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
+
+import { AppSidebar } from "@/components/layout/app-sidebar";
+import Header from "@/components/layout/header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,11 +24,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         />
         <SidebarInset className="bg-transparent">
           <Header />
-          <div className="m-5">
-            {children}
-          </div>
+          <div className="m-5">{children}</div>
         </SidebarInset>
       </main>
     </SidebarProvider>
-  )
+  );
 }

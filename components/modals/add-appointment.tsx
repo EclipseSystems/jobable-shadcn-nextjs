@@ -93,7 +93,7 @@ export function AddAppointment({ isOpen, onClose }: AddApptProps) {
 
         <DialogFooter>
           <DialogClose>
-            <Button variant="secondary" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </DialogClose>

@@ -12,7 +12,7 @@ import {
   Pencil,
 } from "lucide-react";
 
-import { EditTask } from "@/components/modals/edit-task";
+import { EditTask } from "@/app/(main)/dashboard/tasks/_components/edit-task";
 import { Task } from "../_lib/types";
 
 interface TaskCardProps

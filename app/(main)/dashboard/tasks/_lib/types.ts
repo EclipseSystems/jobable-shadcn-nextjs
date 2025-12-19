@@ -1,12 +1,15 @@
 import { ArrowDown, ArrowRight, ArrowUp, Check, Circle, CircleAlert, X } from "lucide-react";
 
 export interface Task {
-  id: string;
+  id: number;
+  column: string;
   title: string;
   priority: string;
+  status: string;
   description?: string;
   assignee?: string;
-  dueDate?: string;
+  dueDate: string;
+  tags: Array<string>;
 }
 
 export const priority = [

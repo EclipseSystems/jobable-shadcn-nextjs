@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { ColumnDef, getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table";
+import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,16 +12,14 @@ import leadData from "./data/leads.json"
 
 import { CustomTable } from "@/components/data-table/data-table";
 import { DataTablePagination } from "@/components/data-table/pagination";
+import { DataTableProps } from "@/components/data-table/types";
 import { DataTableViewOptions } from "@/components/data-table/column-toggle";
+import { RowDensity } from "@/components/data-table/row-density";
+
+import { AddLead } from "@/components/modals/add-lead";
+import { CSVMenu } from "@/components/custom/csv-export";
 import { FilterSheet } from "@/components/modals/filter-sheet"
 import { PageTitle } from "@/components/layout/formatting"
-import { RowDensity } from "@/components/data-table/row-density";
-import { AddLead } from "@/components/modals/add-lead";
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-}
 
 function DataTable<TData, TValue>({
   columns,
@@ -52,6 +50,7 @@ function DataTable<TData, TValue>({
       <div className="flex gap-2">
         <RowDensity density={density} setDensity={(density: string) => setDensity(density)}/>
         <DataTableViewOptions table={table} />
+        <CSVMenu data={data} fileName={`leads_${Date.now().toString()}`} className={"ml-auto"} />
       </div>
       <CustomTable table={table} density={density} />
       <DataTablePagination table={table} />

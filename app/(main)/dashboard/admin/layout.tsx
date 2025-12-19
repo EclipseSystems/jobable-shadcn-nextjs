@@ -8,16 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-
-import { DollarSign, Eye, Lock, Mail, Users } from "lucide-react";
-
-const links = [
-  { name: "Branding", url: "/dashboard/admin/branding", icon: Eye },
-  { name: "User management", url: "/dashboard/admin/users", icon: Users },
-  { name: "Billing", url: "/dashboard/admin/billing", icon: DollarSign },
-  { name: "Notifications", url: "/dashboard/admin/notifications", icon: Mail },
-  { name: "Security", url: "/dashboard/admin/security", icon: Lock },
-];
+import { links } from "./_lib/links";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -41,6 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <nav className="flex space-x-2 py-1 lg:flex-col lg:space-y-1 lg:space-x-0">
                   {links.map((link) => (
                     <Link
+                      key={link.name}
                       href={link.url}
                       className={cn(
                         buttonVariants({ variant: "ghost" }),

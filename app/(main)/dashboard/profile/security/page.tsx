@@ -1,7 +1,7 @@
 import { Heading, SubHeading } from "@/components/layout/formatting"
 import { ResetPassword } from "@/components/modals/reset-password"
 import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { Key, Phone, QrCode } from "lucide-react"
 
 const auth = [
@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <>
       <div className="flex-row w-full space-y-4">
-        <Heading title="Secuirty" />
+        <Heading title="Security" />
         <SubHeading title="Password" />
         <ResetPassword/>
         <p className="text-sm">Last reset date: 1 December 2025, 4:24PM</p>

@@ -1,41 +1,65 @@
 "use client";
 
 import { useState } from "react";
+import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { PageTitle } from "@/components/layout/formatting";
 import { Kanban, KanbanBoard, KanbanOverlay } from "@/components/ui/kanban";
 
-import taskData from "@/app/(main)/dashboard/tasks/_lib/data.json";
 import { TaskColumn } from "./_components/kanban-column";
 import { TaskCard } from "./_components/kanban-task";
 import { Task } from "./_lib/types";
-import { Columns3, Ellipsis, Filter, Paperclip, Pencil, X } from "lucide-react";
-import { EditTask } from "@/components/modals/edit-task";
+import { EditTask } from "@/app/(main)/dashboard/tasks/_components/edit-task";
+
+import { CustomTable } from "@/components/data-table/data-table";
+import { DataTablePagination } from "@/components/data-table/pagination";
+import { DataTableProps } from "@/components/data-table/types";
+import { DataTableViewOptions } from "@/components/data-table/column-toggle";
+import { taskColumns } from "@/components/data-table/columns";
+import taskData from "@/app/(main)/dashboard/tasks/_lib/data.json";
 
 const tabs = [
   { id: "board", value: "Board" },
   { id: "list", value: "List" },
 ];
+
+function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState({})
+  const [sorting, setSorting] = useState<SortingState>([])
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
+    state: {
+      columnVisibility,
+      rowSelection,
+      sorting
+    }
+  })
+
+  return (
+    <div className="space-y-2">
+      <div className="flex gap-2">
+        <DataTableViewOptions table={table} />
+      </div>
+      <CustomTable table={table} />
+      <DataTablePagination table={table} />
+    </div>
+  )
+}
 
 export default function Page() {
   const [columns, setColumns] = useState<Record<string, Task[]>>(taskData);
@@ -45,7 +69,11 @@ export default function Page() {
     <>
       <Card>
         <CardContent className="space-y-4">
-          <PageTitle title="Tasks" />
+          <div className="flex gap-2 items-center">
+            <PageTitle title="Tasks" />
+            <Button className="ml-auto">Create task</Button>
+            <Button variant="outline">Create column</Button>
+          </div>
 
           {/* Tabs */}
           <Tabs defaultValue="board">
@@ -86,62 +114,9 @@ export default function Page() {
 
             {/* List content */}
             <TabsContent className="space-y-2" value="list">
-              <div className="flex gap-2">
-                <Button variant="outline"><Columns3 />Columns</Button>
-                <Button variant="outline"><Filter />Filter</Button>
-              </div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead><Checkbox /></TableHead>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Column</TableHead>
-                    <TableHead>Priority</TableHead>
-                    <TableHead>Due date</TableHead>
-                    <TableHead>Tags</TableHead>
-                    <TableHead>Tasks</TableHead>
-                    <TableHead><Paperclip size={14} /></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {Object.entries(columns).flatMap(([columnValue, tasks]) =>
-                    tasks.map((task) => (
-                      <TableRow key={task.id}>
-                        <TableCell><Checkbox /></TableCell>
-                        <TableCell>
-                          <div className="flex items-center">
-                            {task.title}
-                            <DropdownMenu>
-                              <DropdownMenuTrigger className="ml-auto">
-                                <Button className="size-7" variant="outline"><Ellipsis /></Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent>
-
-                                <DropdownMenuItem onClick={() => setEditOpen(true)}>
-                                  <Pencil /> Edit task
-                                </DropdownMenuItem>
-
-                                <DropdownMenuItem variant="destructive"><X /> Delete task</DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                            
-                          </div>
-                        </TableCell>
-                        <TableCell><Badge>{columnValue}</Badge></TableCell>
-                        <TableCell className="capitalize">
-                          <Badge variant={task.priority === "high" ? "destructive" : task.priority === "medium" ? "default" : "secondary"}>
-                            {task.priority}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{task.dueDate}</TableCell>
-                        <TableCell><Badge>Tag</Badge></TableCell>
-                        <TableCell>3/5</TableCell>
-                        <TableCell><Paperclip size={14} /></TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+              <DataTable columns={taskColumns} data={
+                Object.entries(columns).flatMap(([_, tasks]) => tasks)
+              }/>
             </TabsContent>
           </Tabs>
         </CardContent>

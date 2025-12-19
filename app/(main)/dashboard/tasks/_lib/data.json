@@ -1,50 +1,71 @@
 {
   "Backlog": [
     {
-      "id": "1",
+      "id": 1,
+      "column": "Backlog",
       "title": "Add authentication",
       "priority": "high",
-      "dueDate": "2024-04-01"
+      "status": "Not started",
+      "dueDate": "2024-04-01",
+      "tags": ["Tag 1", "Tag 2"]
     },
     {
-      "id": "2",
+      "id": 2,
+      "column": "Backlog",
       "title": "Create API endpoints",
       "priority": "medium",
-      "dueDate": "2024-04-05"
+      "status": "In progress",
+      "dueDate": "2024-04-05",
+      "tags": ["Tag 1"]
     },
     {
-      "id": "3",
+      "id": 3,
+      "column": "Backlog",
       "title": "Write documentation",
       "priority": "low",
-      "dueDate": "2024-04-10"
+      "status": "Not started",
+      "dueDate": "2024-04-10",
+      "tags": ["Tag 2"]
     }
   ],
   "In progress": [
     {
-      "id": "4",
+      "id": 4,
+      "column": "In progress",
       "title": "Design system updates",
       "priority": "high",
-      "dueDate": "2024-03-28"
+      "status": "Done",
+      "dueDate": "2024-03-28",
+      "tags": ["Tag 1", "Tag 3"]
     },
     {
-      "id": "5",
+      "id": 5,
+      "column": "In progress",
       "title": "Implement dark mode",
       "priority": "medium",
-      "dueDate": "2024-04-02"
+      "status": "Not started",
+      "dueDate": "2024-04-02",
+      "tags": ["Tag 2", "Tag 3"]
     }
   ],
   "Done": [
     {
-      "id": "7",
+      "id": 6,
+      "column": "Done",
       "title": "Setup project",
       "priority": "high",
-      "dueDate": "2024-03-25"
+      "status": "In progress",
+      "dueDate": "2024-03-25",
+      "tags": ["Tag 1"]
     },
     {
-      "id": "8",
+      "id": 7,
+      "column": "Done",
       "title": "Initial commit",
       "priority": "low",
-      "dueDate": "2024-03-24"
+      "status": "Done",
+      "dueDate": "2024-03-24",
+      "tags": ["Tag 1", "Tag 2"]
     }
   ]
 }

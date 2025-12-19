@@ -7,9 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
@@ -20,7 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { AlarmCheck, CircleSmall, Siren } from "lucide-react"
+import { severity } from "@/lib/options"
+import { CircleSmall, Siren } from "lucide-react"
 
 export function IssueForm({ open, onOpenChange }:{
   open: boolean
@@ -45,10 +44,12 @@ export function IssueForm({ open, onOpenChange }:{
                 <SelectValue placeholder="Issue severity" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="critical"><Siren className="text-red-500"/> Critical (1-8 hours)</SelectItem>
-                <SelectItem value="high"><CircleSmall className="text-amber-500"/> High (8-24 hours)</SelectItem>
-                <SelectItem value="medium"><CircleSmall className="text-yellow-500"/> Medium (1-3 days)</SelectItem>
-                <SelectItem value="low"><CircleSmall className="text-green-500"/> Low (3-7 days)</SelectItem>
+                {severity.map((item) => (
+                  <SelectItem value={item.value}>
+                    <item.icon className={item.color}/>
+                    {item.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Label htmlFor="email">Please select an issue category</Label>
@@ -79,7 +80,7 @@ export function IssueForm({ open, onOpenChange }:{
 
         <DialogFooter>
           <DialogClose>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="outline">Cancel</Button>
           </DialogClose>
           <Button type="submit">Submit</Button>
         </DialogFooter>

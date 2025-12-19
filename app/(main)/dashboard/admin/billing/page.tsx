@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { animate, motion, useMotionValue, useTransform } from "motion/react";
 
-import { Heading, SubHeading } from "@/components/layout/formatting";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { Progress } from "@/components/ui/progress";
 import {
   Table,
   TableBody,
@@ -26,15 +25,30 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { CircleCheck, Download, Info } from "lucide-react";
+
+import { Heading, SubHeading } from "@/components/layout/formatting";
+import ProgressBar from "@/components/custom/progress-bar";
+import { AlertTriangle, CircleCheck, Download, Info } from "lucide-react";
+import { ChangePayment } from "./_components/change-method";
+
+const grid = [
+  { label: "Method", value: "Credit card" },
+  { label: "Cardholder name", value: "Isaac Nicol" },
+  { label: "Card number", value: "---- ---- ---- --69" },
+  { label: "Expiry date", value: "01/2028" },
+];
 
 export default function Page() {
+  const [paymentOpen, setPaymentOpen] = useState(false);
+
+  // Storage used
+  const paidStorage = 64;
   const storageUsed = 33;
   const count = useMotionValue(0);
   const rounded = useTransform(() => Math.round(count.get()));
 
-  React.useEffect(() => {
-    const controls = animate(count, storageUsed, { duration: 3 });
+  useEffect(() => {
+    const controls = animate(count, storageUsed, { duration: 2 });
     return () => controls.stop();
   }, []);
 
@@ -56,14 +70,28 @@ export default function Page() {
 
         <div className="flex items-baseline gap-1.5">
           <p className="flex text-4xl font-bold">
-            <motion.pre className="font-sans">{rounded}</motion.pre>%
+            <motion.pre className="font-sans">{rounded}</motion.pre>
+            <p>%</p>
           </p>
           <p className="text-sm">used</p>
           <p className="ml-auto text-sm text-muted-foreground">
-            21.12 of 64.00 GB used
+            {(storageUsed / 100) * paidStorage} of {paidStorage} GB used
           </p>
         </div>
-        <Progress value={storageUsed} />
+        <ProgressBar
+          value={storageUsed}
+          barClassName={storageUsed >= 90 ? "bg-destructive" : "bg-primary"}
+        />
+        <Alert hidden={storageUsed < 90} variant={"destructive"}>
+          <AlertTriangle />
+          <AlertTitle>
+            You have used over 90% of your allocated storage.
+          </AlertTitle>
+          <AlertDescription>
+            Please either purchase additional storage or archive files to free
+            up available space.
+          </AlertDescription>
+        </Alert>
 
         {/* Licensing */}
         <SubHeading title="Licensing" />
@@ -71,7 +99,16 @@ export default function Page() {
         {/* Payment information */}
         <div className="flex items-center gap-4">
           <SubHeading title="Payment information" />
-          <HoverCard openDelay={0} closeDelay={0}>
+          <Button
+            onClick={() => setPaymentOpen(true)}
+            variant="outline"
+            size="sm"
+          >
+            Change payment method
+          </Button>
+
+          {/* Demonstration */}
+          {/* <HoverCard openDelay={0} closeDelay={0}>
             <HoverCardTrigger>
               <Button disabled variant="outline" size="sm">
                 Change payment method <Info />
@@ -83,26 +120,16 @@ export default function Page() {
                 your administrator.
               </p>
             </HoverCardContent>
-          </HoverCard>
+          </HoverCard> */}
         </div>
 
         <div className="grid grid-cols-4 border w-full rounded-lg p-4">
-          <div className="col-span-1">
-            <p className="text-sm font-bold">Method</p>
-            <p className="text-sm">Credit card</p>
-          </div>
-          <div className="col-span-1">
-            <p className="text-sm font-bold">Cardholder name</p>
-            <p className="text-sm">Isaac Nicol</p>
-          </div>
-          <div className="col-span-1">
-            <p className="text-sm font-bold">Card number</p>
-            <p className="text-sm">----&nbsp;----&nbsp;----&nbsp;--69</p>
-          </div>
-          <div className="col-span-1">
-            <p className="text-sm font-bold">Expiry date</p>
-            <p className="text-sm">01/2028</p>
-          </div>
+          {grid.map((row) => (
+            <div className="col-span-1">
+              <p className="text-sm font-bold">{row.label}</p>
+              <p className="text-sm">{row.value}</p>
+            </div>
+          ))}
         </div>
 
         {/* Invoice history */}
@@ -147,6 +174,7 @@ export default function Page() {
           </TableBody>
         </Table>
       </div>
+      <ChangePayment isOpen={paymentOpen} onClose={() => setPaymentOpen(false)} />
     </>
   );
 }

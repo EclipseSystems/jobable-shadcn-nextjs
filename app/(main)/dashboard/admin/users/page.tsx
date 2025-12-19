@@ -2,14 +2,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Table,
   TableBody,
   TableCell,
@@ -18,10 +10,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Ellipsis } from "lucide-react";
 
 import { Heading } from "@/components/layout/formatting";
-import { tabs, userMenu, users } from "./_lib/data";
+import { tabs, users } from "./_lib/data";
+import { UserActions } from "./_components/user-actions";
 
 export default function Page() {
   return (
@@ -57,7 +49,7 @@ export default function Page() {
               </TableHeader>
               <TableBody>
                 {users.map((user) => (
-                  <TableRow>
+                  <TableRow key={user.name}>
                     <TableCell className="flex items-center gap-3">
                       <Avatar>
                         {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
@@ -74,33 +66,21 @@ export default function Page() {
                         {user.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <Button size="icon-sm" variant="outline">
-                            <Ellipsis />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuLabel>User actions</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          {userMenu.map((item) => (
-                            <>
-                              <DropdownMenuItem variant={item.variant}>
-                                <item.icon />
-                                {item.label}
-                              </DropdownMenuItem>
-                              {item.separator && <DropdownMenuSeparator />}
-                            </>
-                          ))}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
+                    <TableCell><UserActions /></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TabsContent>
+
+          <TabsContent className="space-y-2" key={tabs[1].value} value={tabs[1].value}>
+            <Button size="sm">Create group</Button>
+          </TabsContent>
+
+          <TabsContent className="space-y-2" key={tabs[2].value} value={tabs[2].value}>
+            <Button size="sm">Create role</Button>
+          </TabsContent>
+
         </Tabs>
       </div>
     </div>

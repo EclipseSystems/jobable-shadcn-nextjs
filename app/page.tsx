@@ -1,75 +1,101 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
-
-import { Button } from "@/components/ui/button"
+import Placeholder from "@/public/placeholder.svg"
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm md:max-w-4xl">
+        <div className="flex flex-col gap-6">
+          <Card className="overflow-hidden p-0">
+            <CardContent className="grid p-0 md:grid-cols-2">
+              <form className="p-6 md:p-8">
+                <FieldGroup>
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <h1 className="text-2xl font-bold">Welcome back</h1>
+                    <p className="text-muted-foreground text-balance">
+                      Login to your Jobable account
+                    </p>
+                  </div>
+                  <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input id="email" type="email" placeholder="m@example.com" required />
+                  </Field>
+                  <Field>
+                    <div className="flex items-center">
+                      <FieldLabel htmlFor="password">Password</FieldLabel>
+                      <a href="#" className="ml-auto text-sm underline-offset-2 hover:underline">
+                        Forgot your password?
+                      </a>
+                    </div>
+                    <Input id="password" type="password" required />
+                  </Field>
+                  <Link href="/dashboard">
+                    <Button className="w-full">Login</Button>
+                  </Link>
+                  {/* <Field><Button type="submit">Login</Button></Field */}
+                  <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+                    Or continue with
+                  </FieldSeparator>
+                  <Field className="grid grid-cols-3 gap-4">
+
+                    {/* Microsoft sign-in */}
+                    <Button variant="outline" type="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 3H11V11H3V3Z" fill="#000000" />
+                        <path d="M3 13H11V21H3V13Z" fill="#000000" />
+                        <path d="M13 3H21V11H13V3Z" fill="#000000" />
+                        <path d="M13 13H21V21H13V13Z" fill="#000000" />
+                      </svg>
+                      <span className="sr-only">Login with Apple</span>
+                    </Button>
+
+                    {/* Google sign-in */}
+                    <Button variant="outline" type="button">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                      <span className="sr-only">Login with Google</span>
+                    </Button>
+
+                    {/* Magic Link sign-in */}
+                    <Button variant="outline" type="button">
+                      Magic Link
+                    </Button>
+
+                  </Field>
+                  <FieldDescription className="text-center">
+                    Don&apos;t have an account? <a href="#">Sign up</a>
+                  </FieldDescription>
+                </FieldGroup>
+              </form>
+              <div className="bg-muted relative hidden md:block">
+                <Image className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale" src={Placeholder} alt={"Placeholder"} />
+              </div>
+            </CardContent>
+          </Card>
+          <FieldDescription className="px-6 text-center">
+            By clicking continue, you agree to our{" "}
+            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          </FieldDescription>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/8 px-5 transition-colors hover:border-transparent hover:bg-black/4 dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-          <Link href="/dashboard">
-            <Button
-              className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/8 px-5 transition-colors hover:border-transparent hover:bg-black/4 dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            >
-              Go to dashboard
-            </Button>
-          </Link>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
