@@ -21,6 +21,7 @@ export const userMenu: menuItem[] = [
 ]
 
 export const users = [
-  { name: "Isaac Nicol", role: "Billing Administrator", status: "Active" },
-  { name: "Saugat Subedi", role: "Administrator", status: "Inactive" },
+  { name: "Isaac Nicol", role: "Billing Administrator", status: "Active", badge: "default" },
+  { name: "Mitchell Nugent", role: "Global Administrator", status: "Invite pending", badge: "destructive" },
+  { name: "Saugat Subedi", role: "Administrator", status: "Inactive", badge: "outline" },
 ]

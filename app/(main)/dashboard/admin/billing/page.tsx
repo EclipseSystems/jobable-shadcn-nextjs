@@ -11,32 +11,15 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { Heading, SubHeading } from "@/components/layout/formatting";
 import ProgressBar from "@/components/custom/progress-bar";
 import { AlertTriangle, CircleCheck, Download, Info } from "lucide-react";
 import { ChangePayment } from "./_components/change-method";
-
-const grid = [
-  { label: "Method", value: "Credit card" },
-  { label: "Cardholder name", value: "Isaac Nicol" },
-  { label: "Card number", value: "---- ---- ---- --69" },
-  { label: "Expiry date", value: "01/2028" },
-];
+import { invoices, payInfo } from "../_lib/data";
+import { queryObjects } from "v8";
 
 export default function Page() {
   const [paymentOpen, setPaymentOpen] = useState(false);
@@ -69,10 +52,10 @@ export default function Page() {
         </div>
 
         <div className="flex items-baseline gap-1.5">
-          <p className="flex text-4xl font-bold">
+          <div className="flex text-4xl font-bold">
             <motion.pre className="font-sans">{rounded}</motion.pre>
-            <p>%</p>
-          </p>
+            <p className="font-sans">%</p>
+          </div>
           <p className="text-sm">used</p>
           <p className="ml-auto text-sm text-muted-foreground">
             {(storageUsed / 100) * paidStorage} of {paidStorage} GB used
@@ -124,7 +107,7 @@ export default function Page() {
         </div>
 
         <div className="grid grid-cols-4 border w-full rounded-lg p-4">
-          {grid.map((row) => (
+          {payInfo.map((row) => (
             <div className="col-span-1">
               <p className="text-sm font-bold">{row.label}</p>
               <p className="text-sm">{row.value}</p>
@@ -137,32 +120,28 @@ export default function Page() {
         <Table className="w-full">
           <TableHeader>
             <TableRow>
-              <TableHead>Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead>Amount</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead></TableHead>
+              {Object.keys(invoices[0]).map((header) => (
+                <TableHead className="capitalize">
+                  {header}
+                </TableHead>
+              ))}
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>A137-14651</TableCell>
-              <TableCell>
-                <Badge>
-                  <CircleCheck /> Paid
-                </Badge>
-              </TableCell>
-              <TableCell>Credit card</TableCell>
-              <TableCell>$199.00</TableCell>
-              <TableCell>01/12/2025</TableCell>
-              <TableCell>
+            {invoices.map((row) => (
+              <TableRow key={row.invoice}>
+                <TableCell>{row.invoice}</TableCell>
+                <TableCell><Badge>{row.status}</Badge></TableCell>
+                <TableCell>{row.method}</TableCell>
+                <TableCell>
+                  ${Number.parseFloat(row.amount.toString()).toFixed(2)}
+                </TableCell>
+                <TableCell>{row.date}</TableCell>
+                <TableCell className="text-right">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
-                      <Button variant="outline" size="icon-sm">
-                        <Download />
-                      </Button>
+                      <Button variant="outline" size="sm"><Download /> Download</Button>
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Download invoice</p>
@@ -170,7 +149,8 @@ export default function Page() {
                   </Tooltip>
                 </TooltipProvider>
               </TableCell>
-            </TableRow>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

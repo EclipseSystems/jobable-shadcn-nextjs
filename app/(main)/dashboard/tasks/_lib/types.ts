@@ -12,6 +12,12 @@ export interface Task {
   tags: Array<string>;
 }
 
+export interface CheckItem {
+  name: string;
+  id: number;
+  done: boolean;
+}
+
 export const priority = [
   { value: "urgent", label: "Urgent", icon: CircleAlert, color: "text-red-500" },
   { value: "high", label: "High", icon: ArrowUp, color: "text-orange-500" },

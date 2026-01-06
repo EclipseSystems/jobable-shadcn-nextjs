@@ -6,20 +6,35 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CircleCheck, CircleX, DoorOpen, Ellipsis, LoaderCircle, Phone, User } from "lucide-react";
+import {
+  ArrowRight,
+  Camera,
+  CircleCheck,
+  CircleX,
+  DoorOpen,
+  Ellipsis,
+  LoaderCircle,
+  Mail,
+  MessageCircle,
+  Phone,
+  User,
+  UserRoundCheck,
+  Video,
+} from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { TaskActions } from "@/app/(main)/dashboard/tasks/_components/task-actions";
-import { table } from "console";
+import { toast } from "sonner";
 
 export type Appointments = {
   id: number;
   name: string;
-  caseManager: string;
-  apptDate: string;
+  manager: string;
+  date: string;
   startTime: string;
   endTime: string;
   method: string;
@@ -29,8 +44,8 @@ export type Appointments = {
 export const apptColumns: ColumnDef<Appointments>[] = [
   { accessorKey: "id", header: "ID" },
   { accessorKey: "name", header: "Name" },
-  { accessorKey: "caseManager", header: "Case manager" },
-  { accessorKey: "apptDate", header: "Appointment date" },
+  { accessorKey: "manager", header: "Case manager" },
+  { accessorKey: "date", header: "Appointment date" },
   { accessorKey: "startTime", header: "Start time" },
   { accessorKey: "endTime", header: "End time" },
   {
@@ -56,16 +71,53 @@ export const apptColumns: ColumnDef<Appointments>[] = [
 
 export type Clients = {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
   gender: string;
-  birthDate: string;
+  date_of_birth: string;
+  email_address: string;
+  mobile_phone: string;
+  home_phone: string;
+  primary_contact: string;
 };
 
 export const clientColumns: ColumnDef<Clients>[] = [
   { accessorKey: "id", header: "ID" },
-  { accessorKey: "name", header: "Name" },
+  { accessorKey: "first_name", header: "First name" },
+  { accessorKey: "last_name", header: "Last name" },
   { accessorKey: "gender", header: "Gender" },
-  { accessorKey: "birthDate", header: "Date of birth" },
+  { accessorKey: "date_of_birth", header: "Date of birth" },
+  { accessorKey: "email_address", header: "Email address" },
+  { accessorKey: "mobile_phone", header: "Mobile number" },
+  { accessorKey: "home_phone", header: "Home phone" },
+  { accessorKey: "primary_contact", header: "Primary contact" },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="outline" className={"my-0.5 size-6"}>
+              <Ellipsis />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Messaging</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <MessageCircle /> Start chat
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Phone />
+              Start call
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Video /> Start video call
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
 ];
 
 export type Leads = {
@@ -136,7 +188,18 @@ export const leadColumns: ColumnDef<Leads>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
-              <DoorOpen /> Convert to lead
+              <UserRoundCheck />
+              Assign lead to
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => toast.success("Lead successfully converted to client!")}
+            >
+              <DoorOpen />
+              Convert to client
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Mail />
+              Send email
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -220,8 +283,8 @@ export const taskColumns: ColumnDef<Tasks>[] = [
             row.getValue("priority") === "high"
               ? "destructive"
               : row.getValue("priority") === "medium"
-                ? "default"
-                : "secondary"
+              ? "default"
+              : "secondary"
           }
         >
           <p className="capitalize">{row.getValue("priority")}</p>
@@ -230,13 +293,26 @@ export const taskColumns: ColumnDef<Tasks>[] = [
     },
   },
   {
-    accessorKey: "status", header: "Status",
+    accessorKey: "status",
+    header: "Status",
     cell: ({ row }) => {
       return (
         <Badge
-          variant={row.getValue("status") === "Not started" ? "destructive" : row.getValue("status") === "Done" ? "outline" : "secondary"}
+          variant={
+            row.getValue("status") === "Not started"
+              ? "destructive"
+              : row.getValue("status") === "Done"
+              ? "outline"
+              : "secondary"
+          }
         >
-          {row.getValue("status") === "Not started" ? <CircleX /> : row.getValue("status") === "Done" ? <CircleCheck /> : <LoaderCircle />}
+          {row.getValue("status") === "Not started" ? (
+            <CircleX />
+          ) : row.getValue("status") === "Done" ? (
+            <CircleCheck />
+          ) : (
+            <LoaderCircle />
+          )}
           {row.getValue("status")}
         </Badge>
       );
@@ -247,14 +323,16 @@ export const taskColumns: ColumnDef<Tasks>[] = [
     accessorKey: "tags",
     header: "Tags",
     cell: ({ row }) => {
-      const array = row.getValue("tags".toString())
+      const array = row.getValue("tags".toString());
       return (
         <div className="flex gap-1">
-          {String(array).split(',').map((tag) => (
-            <Badge>{tag}</Badge>
-          ))}
+          {String(array)
+            .split(",")
+            .map((tag) => (
+              <Badge>{tag}</Badge>
+            ))}
         </div>
       );
-    }
+    },
   },
 ];

@@ -5,6 +5,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -12,17 +25,32 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { AlertTriangle, Home, Settings } from "lucide-react";
+import {
+  AlertTriangle,
+  ChevronRight,
+  Ellipsis,
+  Home,
+  Settings,
+  Star,
+} from "lucide-react";
 
 import * as EpicLogo from "../../public/epic_logo.jpg";
 import { DownloadApp } from "../modals/download-app";
 import { navLinks } from "../../lib/nav-routes";
 import { NewItem } from "./new-item";
 
+const headerItems = [
+  { title: "Dashboard", url: "/dashboard", icon: Home },
+  { title: "Alerts", url: "/dashboard/alerts", icon: AlertTriangle },
+];
 const footerItems = [
   { title: "Admin portal", url: "/dashboard/admin", icon: Settings },
 ];
@@ -43,22 +71,16 @@ export function AppSidebar() {
             </SidebarMenuItem>
 
             {/* Dashboard link */}
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Dashboard">
-                <Link href="/dashboard">
-                  <Home />
-                  <span>Dashboard</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Alerts">
-                <Link href="/dashboard/alerts">
-                  <AlertTriangle />
-                  <span>Alerts</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            {headerItems.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild tooltip={item.title}>
+                  <Link href={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
           </SidebarMenu>
         </SidebarHeader>
 
@@ -67,23 +89,82 @@ export function AppSidebar() {
             <SidebarGroup key={groupTitle}>
               <SidebarGroupLabel>{groupData.title}</SidebarGroupLabel>
               <SidebarMenu>
-                {groupData.links.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={usePathname() === item.url}
-                      tooltip={item.title}
-                    >
-                      <Link key={item.title} href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                    {item.badge && (
-                      <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
-                    )}
-                  </SidebarMenuItem>
-                ))}
+                {groupData.links.map((item) =>
+                  item.items ? (
+                    <Collapsible key={item.title} className="group/collapsible">
+                      <SidebarMenuItem>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton tooltip={item.title}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.items.map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton
+                                  asChild
+                                  isActive={usePathname() === subItem.url}
+                                >
+                                  <Link key={subItem.title} href={subItem.url}>
+                                    <span>{subItem.title}</span>
+                                  </Link>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  ) : (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
+                        aria-disabled={item.disabled}
+                        isActive={usePathname() === item.url}
+                        tooltip={item.title}
+                      >
+                        <Link key={item.title} href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                      {item.badge && (
+                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                      )}
+                      {item.action && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <SidebarMenuAction>
+                              <Ellipsis />
+                            </SidebarMenuAction>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent side="right" align="start">
+                            <DropdownMenuLabel>Recent</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                              <span>Benjamin Hermiston</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <span>Terrell Mitchell</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <span>Reginald Padberg</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <span>Nancy Swaniawski</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <span>Rachael Collier</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      )}
+                    </SidebarMenuItem>
+                  )
+                )}
               </SidebarMenu>
             </SidebarGroup>
           ))}

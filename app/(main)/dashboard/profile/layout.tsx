@@ -1,20 +1,15 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
-import { CircleUser, Lock, Monitor } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-
-const links = [
-  { name: "User profile", url: "/dashboard/profile/details", icon: CircleUser },
-  { name: "Display", url: "/dashboard/profile/display", icon: Monitor },
-  { name: "Security", url: "/dashboard/profile/security", icon: Lock },
-];
+import { links } from "./_lib/links";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -40,6 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <nav className="flex space-x-2 py-1 lg:flex-col lg:space-y-1 lg:space-x-0">
                   {links.map((link) => (
                     <Link
+                      key={link.name}
                       href={link.url}
                       className={cn(
                         buttonVariants({ variant: "ghost" }),

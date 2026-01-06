@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { links } from "./_lib/links";
+import { PageTitle } from "@/components/layout/formatting";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Card>
         <CardContent>
           <div className="space-y-0.5">
-            <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+            <PageTitle title="Settings" />
             <p className="text-muted-foreground">
               Manage your account settings and set e-mail preferences.
             </p>

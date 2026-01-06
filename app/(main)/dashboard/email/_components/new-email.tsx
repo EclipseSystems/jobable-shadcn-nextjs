@@ -1,16 +1,7 @@
 import { useCallback, useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import {
   FileUpload,
@@ -24,23 +15,11 @@ import {
 } from "@/components/ui/file-upload";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import { Info, Upload, X } from "lucide-react";
-import { Label } from "@/components/ui/label";
+import { RadioBadgeGroup } from "@/components/custom/radio-badge-group";
 
 const options = ["CC", "BCC"];
 
@@ -61,7 +40,12 @@ export function NewEmail({ isOpen, onClose }: NewEmailProps) {
   }, []);
   return (
     <>
-      <Drawer handleOnly={true} direction="right" open={isOpen} onOpenChange={onClose}>
+      <Drawer
+        handleOnly={true}
+        direction="right"
+        open={isOpen}
+        onOpenChange={onClose}
+      >
         <DrawerContent>
           <DrawerHeader>
             <DrawerTitle>Compose new email</DrawerTitle>
@@ -71,21 +55,7 @@ export function NewEmail({ isOpen, onClose }: NewEmailProps) {
           <ScrollArea className="h-185">
             <div className="p-4 space-y-4 h-content">
               <div className="flex items-center gap-2">
-                {options.map((option: string) => (
-                  <Badge key={option} variant="secondary" className="relative gap-2 rounded-sm px-3 py-1.5">
-                    <Checkbox
-                      id={option}
-                      checked={selected.includes(option)}
-                      onCheckedChange={(checked) =>
-                        setSelected(checked ? [...selected, option] : selected.filter((item) => item !== option))
-                      }
-                      className="data-[state=unchecked]:hidden"
-                    />
-                    <label htmlFor={option} className="cursor-pointer select-none after:absolute after:inset-0">
-                      {option}
-                    </label>
-                  </Badge>
-                ))}
+                <RadioBadgeGroup options={options} />
               </div>
               <FieldSet>
                 <FieldGroup>
@@ -135,7 +105,7 @@ export function NewEmail({ isOpen, onClose }: NewEmailProps) {
 
                   <Field id="body">
                     <FieldLabel htmlFor="body">Message</FieldLabel>
-                    <Textarea/>
+                    <Textarea />
                   </Field>
 
                   <Field id="attachments">
@@ -154,11 +124,21 @@ export function NewEmail({ isOpen, onClose }: NewEmailProps) {
                           <div className="flex items-center justify-center rounded-full border p-2.5">
                             <Upload className="size-6 text-muted-foreground" />
                           </div>
-                          <p className="font-medium text-sm">Drag & drop files here</p>
-                          <p className="text-muted-foreground text-xs">Or click to browse (max 2 files, up to 5MB each)</p>
+                          <p className="font-medium text-sm">
+                            Drag & drop files here
+                          </p>
+                          <p className="text-muted-foreground text-xs">
+                            Or click to browse (max 2 files, up to 5MB each)
+                          </p>
                         </div>
                         <FileUploadTrigger asChild>
-                          <Button variant="outline" size="sm" className="mt-2 w-fit">Browse files</Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="mt-2 w-fit"
+                          >
+                            Browse files
+                          </Button>
                         </FileUploadTrigger>
                       </FileUploadDropzone>
                       <FileUploadList>
@@ -167,7 +147,13 @@ export function NewEmail({ isOpen, onClose }: NewEmailProps) {
                             <FileUploadItemPreview />
                             <FileUploadItemMetadata />
                             <FileUploadItemDelete asChild>
-                              <Button variant="ghost" size="icon" className="size-7"><X /></Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="size-7"
+                              >
+                                <X />
+                              </Button>
                             </FileUploadItemDelete>
                           </FileUploadItem>
                         ))}
@@ -184,7 +170,9 @@ export function NewEmail({ isOpen, onClose }: NewEmailProps) {
           <DrawerFooter className="border-t">
             <Button>Submit</Button>
             <DrawerClose asChild>
-              <Button onClick={onClose} variant="outline">Cancel</Button>
+              <Button onClick={onClose} variant="outline">
+                Cancel
+              </Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>

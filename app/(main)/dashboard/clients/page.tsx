@@ -1,15 +1,18 @@
 "use client"
 
 import { useState } from "react";
+import Link from "next/link";
 import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table";
-import { faker } from "@faker-js/faker";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card"
 import {
-  Card,
-  CardContent,
-} from "@/components/ui/card"
-import { Plus } from "lucide-react";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Mail, Phone, Plus, Table } from "lucide-react";
 
 import { AddClient } from "@/components/modals/add-client";
 import { clientColumns } from "@/components/data-table/columns";
@@ -19,20 +22,7 @@ import { DataTableProps } from "@/components/data-table/types";
 import { DataTableViewOptions } from "@/components/data-table/column-toggle";
 import { PageTitle } from "@/components/layout/formatting"
 import { RowDensity } from "@/components/data-table/row-density";
-import { CSVMenu } from "@/components/custom/csv-export";
-
-function generateRows() {
-  const rows = [];
-  for (let i = 0; i < 10; i++) {
-    rows.push({
-      id: i + 1,
-      name: faker.person.fullName(),
-      gender: faker.person.sex(),
-      birthDate: faker.date.birthdate().toDateString()
-    });
-  }
-  return rows;
-}
+import clientData from "../clients/_lib/data.json"
 
 function DataTable<TData, TValue>({
   columns,
@@ -60,8 +50,18 @@ function DataTable<TData, TValue>({
   return (
     <div className="space-y-2">
       <div className="flex gap-2">
-        <RowDensity density={density} setDensity={(density: string) => setDensity(density)}/>
+        <RowDensity density={density} setDensity={(density: string) => setDensity(density)} />
         <DataTableViewOptions table={table} />
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant={"outline"}>Bulk actions</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem><Phone />Bulk SMS</DropdownMenuItem>
+            <DropdownMenuItem><Table />Bulk update</DropdownMenuItem>
+            <DropdownMenuItem><Mail />Send email</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <CustomTable table={table} density={density} />
       <DataTablePagination table={table} />
@@ -76,13 +76,17 @@ export default function Page() {
       <Card>
         <CardContent>
           <div className="flex items-center mb-4">
-            <PageTitle title={'Clients'}/>
-            <Button variant="outline" size="icon"><Plus /></Button>
+            <PageTitle title={'Clients'} />
+            <Link href="/dashboard/clients/details/profile">
+              <Button variant="outline" size="icon">
+                <Plus />
+              </Button>
+            </Link>
           </div>
-          <DataTable columns={clientColumns} data={generateRows()} />
+          <DataTable columns={clientColumns} data={clientData} />
         </CardContent>
       </Card>
-      <AddClient isOpen={clientOpen} onClose={() => setClientOpen(false)}/>
+      <AddClient isOpen={clientOpen} onClose={() => setClientOpen(false)} />
     </>
   )
 }

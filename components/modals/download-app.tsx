@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import {
   Dialog,
   DialogContent,
@@ -8,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
 import { QrCode } from "lucide-react"
-import Image from "next/image"
+
 import { QRCode, QRCodeCanvas } from "../ui/qr-code"
 
 export function DownloadApp() {
@@ -30,19 +32,21 @@ export function DownloadApp() {
               <DialogDescription>
                 Take JobAble wherever you go. Scan the QR code below to download the JobAble app to your mobile device.
               </DialogDescription>
-              <div className="flex justify-center gap-2">
-                <Image
-                  src={"/Download_on_the_App_Store_Badge.svg"}
-                  alt={"Download on the App Store"}
-                  height={150}
-                  width={150}
-                />
-                <Image
-                  src={"/Google_Play_Store_badge_EN.svg"}
-                  alt={"Get it on Google Play"}
-                  height={150}
-                  width={150}
-                />
+              <div className="grid space-y-2">
+                <div className="flex justify-center gap-2">
+                  <Image
+                    src={"/Download_on_the_App_Store_Badge.svg"}
+                    alt={"Download on the App Store"}
+                    height={150}
+                    width={150}
+                  />
+                  <Image
+                    src={"/Google_Play_Store_badge_EN.svg"}
+                    alt={"Get it on Google Play"}
+                    height={150}
+                    width={150}
+                  />
+                </div>
                 <QRCode value={"https://www.epicassist.org"}>
                   <QRCodeCanvas />
                 </QRCode>

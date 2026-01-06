@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "sender": "John Doe",
+    "subject": "Meeting Reminder",
+    "body": "Don't forget about our meeting scheduled for tomorrow at 10 AM.",
+    "timestamp": "2024-06-15T09:00:00Z",
+    "star": true
+  },
+  {
+    "id": 2,
+    "sender": "Jane Smith",
+    "subject": "Project Update",
+    "body": "The project is on track for completion by the end of the month.",
+    "timestamp": "2024-06-14T14:30:00Z",
+    "star": false
+  },
+  {
+    "id": 3,
+    "sender": "HR Department",
+    "subject": "Policy Changes",
+    "body": "Please review the updated company policies attached in this email.",
+    "timestamp": "2024-06-13T08:15:00Z",
+    "star": true
+  },
+  {
+    "id": 4,
+    "sender": "Marketing Team",
+    "subject": "New Campaign Launch",
+    "body": "We are excited to announce the launch of our new marketing campaign next week.",
+    "timestamp": "2024-06-12T11:45:00Z",
+    "star": false
+  },
+  {
+    "id": 5,
+    "sender": "Support Team",
+    "subject": "Ticket Resolved",
+    "body": "Your support ticket has been resolved. Please check your account for details.",
+    "timestamp": "2024-06-11T16:20:00Z",
+    "star": false
+  },
+  {
+    "id": 6,
+    "sender": "Finance Department",
+    "subject": "Invoice Attached",
+    "body": "Please find the attached invoice for your recent purchase.",
+    "timestamp": "2024-06-10T10:05:00Z",
+    "star": true
+  }
+]

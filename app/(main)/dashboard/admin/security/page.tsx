@@ -13,7 +13,7 @@ export default function Page() {
     <div className="space-y-4">
       <Heading title="Security" />
       <SubHeading title="Session timeout" />
-      <p className="text-sm">Automatically sign out users after:</p>
+      <p className="text-sm text-muted-foreground">Automatically sign out users after:</p>
       <div className="flex gap-2 items-center">
         <Select>
           <SelectTrigger className="w-60">
@@ -30,6 +30,8 @@ export default function Page() {
         </Select>
         <Button>Save</Button>
       </div>
+      <SubHeading title="IP whitelisting" />
+      <p className="text-sm text-muted-foreground">Configure this to restrict device access based on the IP address of your corporate network.</p>
     </div>
   )
 }

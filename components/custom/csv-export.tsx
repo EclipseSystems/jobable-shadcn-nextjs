@@ -10,7 +10,7 @@ import { Download } from "lucide-react";
 export function CSVMenu({ data, fileName, className }: {
   data: Array<any>;
   fileName: string;
-  className: string;
+  className?: string;
 }) {
   const downloadCSV = () => {
     const headers = Object.keys(data[0]).join(',');

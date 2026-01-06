@@ -1,50 +1,35 @@
 "use client"
 
+import { useState } from "react"
+import { ColumnDef, getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table"
+
 import { Button } from "@/components/ui/button"
+import {
+  CalendarBody,
+  CalendarDate,
+  CalendarDatePagination,
+  CalendarDatePicker,
+  CalendarHeader,
+  CalendarItem,
+  CalendarMonthPicker,
+  CalendarProvider,
+  CalendarYearPicker,
+} from "@/components/custom/page-calendar"
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { PageTitle } from "@/components/layout/formatting"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Plus } from "lucide-react"
 
-import { faker } from "@faker-js/faker";
 import { AddAppointment } from "@/components/modals/add-appointment"
-import { useState } from "react"
-import { ColumnDef, getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table"
-import { RowDensity } from "@/components/data-table/row-density"
-import { DataTableViewOptions } from "@/components/data-table/column-toggle"
+import { apptColumns } from "@/components/data-table/columns"
 import { CustomTable } from "@/components/data-table/data-table"
 import { DataTablePagination } from "@/components/data-table/pagination"
-import { apptColumns } from "@/components/data-table/columns"
-
-const methods = ['phone', 'face']
-const results = ['ATT', 'DNA']
-
-function generateRows() {
-  const rows = [];
-  for (let i = 0; i < 10; i++) {
-    rows.push({
-      id: i + 1,
-      name: faker.person.fullName(),
-      caseManager: faker.person.fullName(),
-      apptDate: faker.date.soon().toDateString(),
-      startTime: faker.date.soon().toLocaleTimeString("en-au"),
-      endTime: faker.date.soon().toLocaleTimeString("en-au"),
-      method: methods[faker.number.int({ max: 1 })],
-      result: results[faker.number.int({ max: 1 })],
-    });
-  }
-  return rows;
-}
+import { DataTableViewOptions } from "@/components/data-table/column-toggle"
+import { PageTitle } from "@/components/layout/formatting"
+import { RowDensity } from "@/components/data-table/row-density"
+import ApptData from "./_lib/data.json"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -88,6 +73,7 @@ function DataTable<TData, TValue>({
 
 export default function Page() {
   const [apptOpen, setApptOpen] = useState(false)
+
   return (
     <>
       <Card>
@@ -102,7 +88,32 @@ export default function Page() {
               <Plus />
             </Button>
           </div>
-          <DataTable columns={apptColumns} data={generateRows()} />
+          <Tabs defaultValue="table" className="w-full">
+            <TabsList>
+              <TabsTrigger value="table">Table</TabsTrigger>
+              <TabsTrigger value="calendar">Calendar</TabsTrigger>
+            </TabsList>
+            <TabsContent value="table">
+              <DataTable columns={apptColumns} data={ApptData} />
+            </TabsContent>
+            <TabsContent value="calendar">
+              <CalendarProvider locale={'en-au'}>
+                <CalendarDate className="pb-2">
+                  <CalendarDatePicker>
+                    <CalendarMonthPicker />
+                    <CalendarYearPicker start={2025} end={2026}/>
+                  </CalendarDatePicker>
+                  <CalendarDatePagination />
+                </CalendarDate>
+                <CalendarHeader />
+                <CalendarBody features={[]}>
+                  {({ feature }) => (
+                    <CalendarItem feature={feature} key={feature.id} />
+                  )}
+                </CalendarBody>
+              </CalendarProvider>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
       <AddAppointment isOpen={apptOpen} onClose={() => setApptOpen(false)}/>

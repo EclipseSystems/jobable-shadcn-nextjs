@@ -8,6 +8,7 @@ import {
   AlignRight,
   Bold,
   Italic,
+  LucideIcon,
   Redo,
   Strikethrough,
   Underline,
@@ -32,6 +33,8 @@ import {
 function Divider() {
   return <div className="divider" />;
 }
+
+
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -90,6 +93,7 @@ export default function ToolbarPlugin() {
 
   return (
     <div className="toolbar" ref={toolbarRef}>
+
       {/* Undo button */}
       <Button
         disabled={!canUndo}

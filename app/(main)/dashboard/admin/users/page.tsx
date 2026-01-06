@@ -13,6 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Heading } from "@/components/layout/formatting";
 import { tabs, users } from "./_lib/data";
+import { CreateUser } from "./_components/create-user";
+import { ImportUsers } from "./_components/import-users";
 import { UserActions } from "./_components/user-actions";
 
 export default function Page() {
@@ -36,8 +38,15 @@ export default function Page() {
           </TabsList>
 
           {/* Users tab */}
-          <TabsContent className="space-y-2" key={tabs[0].value} value={tabs[0].value}>
-            <Button size="sm">Create user</Button>
+          <TabsContent
+            className="space-y-2"
+            key={tabs[0].value}
+            value={tabs[0].value}
+          >
+            <div className="flex gap-1">
+              <CreateUser />
+              <ImportUsers />
+            </div>
             <Table className="w-full">
               <TableHeader>
                 <TableRow>
@@ -62,25 +71,34 @@ export default function Page() {
                     </TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell>
-                      <Badge variant={user.status === "Inactive" ? "outline" : "default"}>
+                      <Badge variant={user.badge as "default" | "destructive" | "outline" | "secondary"}>
                         {user.status}
                       </Badge>
                     </TableCell>
-                    <TableCell><UserActions /></TableCell>
+                    <TableCell>
+                      <UserActions />
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TabsContent>
 
-          <TabsContent className="space-y-2" key={tabs[1].value} value={tabs[1].value}>
+          <TabsContent
+            className="space-y-2"
+            key={tabs[1].value}
+            value={tabs[1].value}
+          >
             <Button size="sm">Create group</Button>
           </TabsContent>
 
-          <TabsContent className="space-y-2" key={tabs[2].value} value={tabs[2].value}>
+          <TabsContent
+            className="space-y-2"
+            key={tabs[2].value}
+            value={tabs[2].value}
+          >
             <Button size="sm">Create role</Button>
           </TabsContent>
-
         </Tabs>
       </div>
     </div>

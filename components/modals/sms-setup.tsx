@@ -14,19 +14,21 @@ interface SmsSetupProps {
 }
 
 export function SmsSetup({ isOpen, onClose }: SmsSetupProps) {
-  <Dialog open={isOpen} onOpenChange={onClose}>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle></DialogTitle>
-      </DialogHeader>
-      <DialogFooter>
-        <DialogClose>
-          <Button onClick={onClose} variant="outline">
-            Cancel
-          </Button>
-        </DialogClose>
-        <Button type="submit">Submit</Button>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>;
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle></DialogTitle>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose>
+            <Button onClick={onClose} variant="outline">
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button type="submit">Submit</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
 }

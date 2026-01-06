@@ -1,8 +1,11 @@
+# Introduction
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Project Synopsis
 
 This project was developed using the following:
+
 - **Next.js** - Javascript framework
 - **Next.js App Router** - page routing
 - **Shadcn UI** - components
@@ -16,6 +19,7 @@ This project was developed using the following:
 - **Prettier** - code formatting
 - **Lexical** - rich text editor kit
 - **dnd-kit** - drag & drop toolkit
+- **cmdk** - command bar kit
 - **TBA** - authentication
 
 ## Getting Started

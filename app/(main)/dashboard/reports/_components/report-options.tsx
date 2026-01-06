@@ -21,7 +21,7 @@ export function ReportOptions({ className }: { className: string }) {
             <Ellipsis />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent align="end">
           <DropdownMenuLabel>Report options</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setFavourite(!favourite)}>

@@ -4,18 +4,12 @@ import {
   DollarSign,
   Eye,
   Lock,
-  LucideIcon,
   Mail,
   Users,
 } from "lucide-react";
+import { navLink } from "@/lib/types";
 
-interface link {
-  name: string;
-  url: string;
-  icon: LucideIcon;
-}
-
-export const links: link[] = [
+export const links: navLink[] = [
   { name: "Branding", url: "/dashboard/admin/branding", icon: Eye },
   { name: "User management", url: "/dashboard/admin/users", icon: Users },
   { name: "Billing", url: "/dashboard/admin/billing", icon: DollarSign },
