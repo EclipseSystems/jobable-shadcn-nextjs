@@ -21,7 +21,7 @@ import {
 import { DoorOpen, Mail, Plus, Table, UserRoundCheck } from "lucide-react";
 
 import { leadColumns } from "@/components/data-table/columns";
-import leadData from "./_lib/leads.json";
+import leadData from "./_lib/data.json";
 
 import { CustomTable } from "@/components/data-table/data-table";
 import { DataTablePagination } from "@/components/data-table/pagination";
@@ -35,7 +35,6 @@ import { FilterSheet } from "@/components/modals/filter-sheet";
 import { PageTitle } from "@/components/layout/formatting";
 import { Subscribe } from "@/components/modals/subscribe";
 import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
 
 function DataTable<TData, TValue>({
   columns,

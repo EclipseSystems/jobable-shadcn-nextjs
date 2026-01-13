@@ -23,6 +23,7 @@ import { DataTableViewOptions } from "@/components/data-table/column-toggle";
 import { PageTitle } from "@/components/layout/formatting"
 import { RowDensity } from "@/components/data-table/row-density";
 import clientData from "../clients/_lib/data.json"
+import { BulkSMS } from "@/components/modals/bulk-sms";
 
 function DataTable<TData, TValue>({
   columns,
@@ -31,6 +32,7 @@ function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [density, setDensity] = useState<string>("standard")
   const [rowSelection, setRowSelection] = useState({})
+  const [smsOpen, setSmsOpen] = useState(false)  
   const [sorting, setSorting] = useState<SortingState>([])
   const table = useReactTable({
     data,
@@ -57,7 +59,9 @@ function DataTable<TData, TValue>({
             <Button variant={"outline"}>Bulk actions</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem><Phone />Bulk SMS</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSmsOpen(true)}>
+              <Phone />Bulk SMS
+            </DropdownMenuItem>
             <DropdownMenuItem><Table />Bulk update</DropdownMenuItem>
             <DropdownMenuItem><Mail />Send email</DropdownMenuItem>
           </DropdownMenuContent>
@@ -65,6 +69,7 @@ function DataTable<TData, TValue>({
       </div>
       <CustomTable table={table} density={density} />
       <DataTablePagination table={table} />
+      <BulkSMS isOpen={smsOpen} onClose={() => setSmsOpen(false)} />
     </div>
   )
 }

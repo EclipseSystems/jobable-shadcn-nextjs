@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { Heading } from "@/components/layout/formatting";
 import { tabs, users } from "./_lib/data";
 import { CreateUser } from "./_components/create-user";
+import { Heading } from "@/components/layout/formatting";
 import { ImportUsers } from "./_components/import-users";
 import { UserActions } from "./_components/user-actions";
 

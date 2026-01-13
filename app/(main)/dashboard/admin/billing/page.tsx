@@ -20,6 +20,7 @@ import { AlertTriangle, CircleCheck, Download, Info } from "lucide-react";
 import { ChangePayment } from "./_components/change-method";
 import { invoices, payInfo } from "../_lib/data";
 import { queryObjects } from "v8";
+import Link from "next/link";
 
 export default function Page() {
   const [paymentOpen, setPaymentOpen] = useState(false);
@@ -46,9 +47,11 @@ export default function Page() {
         {/* Storage */}
         <div className="flex items-center gap-4">
           <SubHeading title="Storage" />
-          <Button variant="outline" size="sm">
-            Buy more storage
-          </Button>
+          <Link href="/dashboard/admin/storage">
+            <Button variant="outline" size="sm">
+              Buy more storage
+            </Button>
+          </Link>
         </div>
 
         <div className="flex items-baseline gap-1.5">
@@ -138,17 +141,17 @@ export default function Page() {
                 </TableCell>
                 <TableCell>{row.date}</TableCell>
                 <TableCell className="text-right">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Button variant="outline" size="sm"><Download /> Download</Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Download invoice</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </TableCell>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button variant="outline" size="sm"><Download /> Download</Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Download invoice</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -1,7 +1,10 @@
 "use client";
 
+import { ColumnDef } from "@tanstack/react-table";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "../ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,11 +12,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { ColumnDef } from "@tanstack/react-table";
+import { toast } from "sonner";
 import {
   ArrowRight,
   Camera,
+  Check,
   CircleCheck,
   CircleX,
   DoorOpen,
@@ -21,14 +24,16 @@ import {
   LoaderCircle,
   Mail,
   MessageCircle,
+  Pencil,
   Phone,
   User,
   UserRoundCheck,
   Video,
+  X,
 } from "lucide-react";
-import { Checkbox } from "../ui/checkbox";
+
+import { EditableCell } from "./editable-cell";
 import { TaskActions } from "@/app/(main)/dashboard/tasks/_components/task-actions";
-import { toast } from "sonner";
 
 export type Appointments = {
   id: number;
@@ -82,6 +87,26 @@ export type Clients = {
 };
 
 export const clientColumns: ColumnDef<Clients>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+  },
   { accessorKey: "id", header: "ID" },
   { accessorKey: "first_name", header: "First name" },
   { accessorKey: "last_name", header: "Last name" },
@@ -162,7 +187,7 @@ export const leadColumns: ColumnDef<Leads>[] = [
       return (
         <Badge
           variant={
-            row.getValue("status") === "To convert" ? "destructive" : "default"
+            row.getValue("status") === "To convert" ? "outline" : "default"
           }
         >
           {row.getValue("status")}
@@ -188,18 +213,17 @@ export const leadColumns: ColumnDef<Leads>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
-              <UserRoundCheck />
-              Assign lead to
+              <UserRoundCheck /> Assign lead to
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => toast.success("Lead successfully converted to client!")}
+              onClick={() =>
+                toast.success("Lead successfully converted to client!")
+              }
             >
-              <DoorOpen />
-              Convert to client
+              <DoorOpen /> Convert to client
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Mail />
-              Send email
+              <Mail /> Send email
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -207,6 +231,8 @@ export const leadColumns: ColumnDef<Leads>[] = [
     },
   },
 ];
+
+// - - ORGANISATIONS - -
 
 export type Organisations = {
   id: number;
@@ -219,14 +245,38 @@ export type Organisations = {
 };
 
 export const orgColumns: ColumnDef<Organisations>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   { accessorKey: "id", header: "ID" },
   { accessorKey: "companyName", header: "Company name" },
   { accessorKey: "tradingAs", header: "Trading as" },
   { accessorKey: "city", header: "City" },
   { accessorKey: "sector", header: "Sector" },
   { accessorKey: "noOfEmp", header: "Employees" },
-  { accessorKey: "mainContact", header: "Main contact" },
-];
+  { accessorKey: "mainContact", header: "Main contact" }
+]
+
+// - - TASKS - -
 
 export type Tasks = {
   id: number;
@@ -283,8 +333,8 @@ export const taskColumns: ColumnDef<Tasks>[] = [
             row.getValue("priority") === "high"
               ? "destructive"
               : row.getValue("priority") === "medium"
-              ? "default"
-              : "secondary"
+                ? "default"
+                : "secondary"
           }
         >
           <p className="capitalize">{row.getValue("priority")}</p>
@@ -302,8 +352,8 @@ export const taskColumns: ColumnDef<Tasks>[] = [
             row.getValue("status") === "Not started"
               ? "destructive"
               : row.getValue("status") === "Done"
-              ? "outline"
-              : "secondary"
+                ? "outline"
+                : "secondary"
           }
         >
           {row.getValue("status") === "Not started" ? (

@@ -22,12 +22,14 @@ import {
 import { Filter } from "lucide-react"
 import { Label } from "../ui/label";
 
-function AccItem({ key, value, name, children }: {
+interface AccItemProps {
   key: number
   value: string
   name: string
   children?: any
-}) {
+}
+
+function AccItem({ key, value, name, children }: AccItemProps) {
   return (
     <AccordionItem key={key} value={value}>
       <AccordionTrigger className='px-5'>{name}</AccordionTrigger>

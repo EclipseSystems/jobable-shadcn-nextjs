@@ -291,7 +291,7 @@ export const CalendarBody = ({ features, children }: CalendarBodyProps) => {
   }
 
   return (
-    <div className="grid flex-grow grid-cols-7">
+    <div className="grid grow grid-cols-7">
       {days.map((day, index) => (
         <div
           className={cn(
@@ -447,7 +447,7 @@ export const CalendarHeader = ({ className }: CalendarHeaderProps) => {
   }, [locale, startDay]);
 
   return (
-    <div className={cn("grid flex-grow grid-cols-7", className)}>
+    <div className={cn("grid grow grid-cols-7", className)}>
       {daysData.map((day) => (
         <div className="p-3 text-right text-muted-foreground text-xs" key={day}>
           {day}
@@ -477,6 +477,32 @@ export const CalendarItem = memo(
 );
 
 CalendarItem.displayName = "CalendarItem";
+
+// Custom today button
+export const CalendarToday = () => {
+  const currentMonth = new Date().getMonth() as CalendarState["month"];
+  const currentYear = new Date().getFullYear();
+  const [month, setMonth] = useCalendarMonth();
+  const [year, setYear] = useCalendarYear();
+
+  const setCurrentDay = useCallback(
+    () => {
+      setMonth(currentMonth);
+      setYear(currentYear);
+    },
+    [month, year, setMonth, setYear]
+  );
+
+  return (
+    <Button
+      variant="outline"
+      size="default"
+      onClick={setCurrentDay}
+    >
+      Today
+    </Button>
+  );
+};
 
 export type CalendarProviderProps = {
   locale?: Intl.LocalesArgument;

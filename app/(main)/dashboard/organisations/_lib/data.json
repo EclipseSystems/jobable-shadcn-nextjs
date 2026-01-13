@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "companyName": "Heidenreich, Metz and Bins",
+    "tradingAs": "Lueilwitz - Ritchie",
+    "city": "Darrionbury",
+    "sector": "Shoes",
+    "noOfEmp": 3302,
+    "mainContact": "Janice Walsh"
+  },
+  {
+    "id": 2,
+    "companyName": "Purdy Group",
+    "tradingAs": "Purdy, Stoltenberg and Pfeffer",
+    "city": "Bethlehem",
+    "sector": "Home",
+    "noOfEmp": 4017,
+    "mainContact": "Alison Kreiger"
+  },
+  {
+    "id": 3,
+    "companyName": "Connelly, D'Amore and Connelly",
+    "tradingAs": "Nolan Inc",
+    "city": "Rubyeberg",
+    "sector": "Tools",
+    "noOfEmp": 381,
+    "mainContact": "Barry Reilly"
+  },
+  {
+    "id": 4,
+    "companyName": "King LLC",
+    "tradingAs": "Barton, Spinka and Vandervort",
+    "city": "San Bernardino",
+    "sector": "Games",
+    "noOfEmp": 1151,
+    "mainContact": "Kenny Senger"
+  },
+  {
+    "id": 5,
+    "companyName": "Beer, Moen and Schinner",
+    "tradingAs": "Green, Nader and Welch",
+    "city": "East Cyrus",
+    "sector": "Jewelry",
+    "noOfEmp": 891,
+    "mainContact": "Luther Littel"
+  },
+  {
+    "id": 6,
+    "companyName": "Thompson - Sawayn",
+    "tradingAs": "Goodwin Inc",
+    "city": "East Raleigh",
+    "sector": "Garden",
+    "noOfEmp": 2341,
+    "mainContact": "Jerome Bartoletti"
+  },
+  {
+    "id": 7,
+    "companyName": "Brown Group",
+    "tradingAs": "Corkery Group",
+    "city": "Mountain View",
+    "sector": "Grocery",
+    "noOfEmp": 737,
+    "mainContact": "Hector Medhurst"
+  }
+]

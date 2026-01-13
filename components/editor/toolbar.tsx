@@ -34,8 +34,6 @@ function Divider() {
   return <div className="divider" />;
 }
 
-
-
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);

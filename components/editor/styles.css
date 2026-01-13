@@ -38,7 +38,7 @@ h1 {
   margin: 20px auto 20px auto;
   border-radius: 2px;
   max-width: 600px;
-  color: #000;
+  color: var(--color-foreground);
   position: relative;
   line-height: 20px;
   font-weight: 400;
@@ -46,11 +46,13 @@ h1 {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+/* color: #000; */
 
 .editor-inner {
-  background: #fff;
+  background: var(--color-background);
   position: relative;
 }
+/* background: #fff; */
 
 .editor-input {
   min-height: 150px;
@@ -309,12 +311,13 @@ pre::-webkit-scrollbar-thumb {
 .toolbar {
   display: flex;
   margin-bottom: 1px;
-  background: #fff;
+  background: var(--color-background);
   padding: 4px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   vertical-align: middle;
 }
+/* background: #fff */
 
 .toolbar button.toolbar-item {
   border: 0;

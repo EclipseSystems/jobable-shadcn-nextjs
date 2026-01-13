@@ -13,6 +13,7 @@ import {
   CalendarItem,
   CalendarMonthPicker,
   CalendarProvider,
+  CalendarToday,
   CalendarYearPicker,
 } from "@/components/custom/page-calendar"
 import {
@@ -30,6 +31,18 @@ import { DataTableViewOptions } from "@/components/data-table/column-toggle"
 import { PageTitle } from "@/components/layout/formatting"
 import { RowDensity } from "@/components/data-table/row-density"
 import ApptData from "./_lib/data.json"
+
+const statuses = [
+  { id: "1", name: "Planned", color: "#6B7280" },
+  { id: "2", name: "In Progress", color: "#F59E0B" },
+  { id: "3", name: "Done", color: "#10B981" },
+];
+
+const exampleFeatures = [
+  { id: "1", name: "Appointment 1", startAt: new Date("2026-01-08T14:30:00Z"), endAt: new Date("2026-01-08T15:00:00Z"), status: statuses[0] },
+  { id: "2", name: "Appointment 2", startAt: new Date("2026-01-13T14:30:00Z"), endAt: new Date("2026-01-13T15:00:00Z"), status: statuses[1] },
+  { id: "3", name: "Appointment 3", startAt: new Date("2026-01-15T14:30:00Z"), endAt: new Date("2026-01-15T15:00:00Z"), status: statuses[2] }
+]
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -100,13 +113,14 @@ export default function Page() {
               <CalendarProvider locale={'en-au'}>
                 <CalendarDate className="pb-2">
                   <CalendarDatePicker>
+                    <CalendarToday />
                     <CalendarMonthPicker />
                     <CalendarYearPicker start={2025} end={2026}/>
                   </CalendarDatePicker>
                   <CalendarDatePagination />
                 </CalendarDate>
                 <CalendarHeader />
-                <CalendarBody features={[]}>
+                <CalendarBody features={exampleFeatures}>
                   {({ feature }) => (
                     <CalendarItem feature={feature} key={feature.id} />
                   )}

@@ -1,4 +1,7 @@
+"use client";
+
 import { useState } from "react";
+import { formatDateRange } from "little-date";
 
 import { Button } from "@/components/ui/button";
 import { Combobox } from "../custom/combobox";
@@ -20,8 +23,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Phone, User } from "lucide-react";
-
-import { formatDateRange } from "little-date";
 
 interface AddApptProps {
   isOpen: boolean;
@@ -86,9 +87,7 @@ export function AddAppointment({ isOpen, onClose }: AddApptProps) {
                   <FieldLabel>Appointment date</FieldLabel>
                   <Input
                     value={thisDate?.toISOString().split("T")[0]}
-                    onChange={(e) =>
-                      setThisDate(new Date(e.target.value))
-                    }
+                    onChange={(e) => setThisDate(new Date(e.target.value))}
                     type="date"
                   />
                 </Field>

@@ -75,3 +75,10 @@ const [value, setValue] = useState('')
 </TableBody>
 </Table>
 ```
+## Toggle button
+```bash
+const [mode, setMode] = useState(false)
+
+<Button onClick={() => setMode(!mode)}>
+    {mode === true ? "True label" : "False label"}
+</Button>
