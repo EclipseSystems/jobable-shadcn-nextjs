@@ -11,6 +11,7 @@ import {
 import { Heading } from "@/components/layout/formatting"
 import { Button } from "@/components/ui/button"
 import { Pencil, Trash } from "lucide-react"
+import { EditSub } from "@/components/modals/edit-subscription"
 
 const subData = [
   { name: "Marketing", table: "Clients", frequency: "Daily", created: "07/01/2026", next: "08/01/2026" },
@@ -42,7 +43,7 @@ export default function Page() {
               ))}
               <TableCell>
                 <div className="flex gap-1">
-                  <Button className="ml-auto" variant="outline" size="icon-sm"><Pencil /></Button>
+                  <EditSub />
                   <Button variant="destructive" size="icon-sm"><Trash /></Button>
                 </div>
               </TableCell>

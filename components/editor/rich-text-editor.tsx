@@ -1,16 +1,20 @@
 "use client"
 
+import { LinkNode } from "@lexical/link";
+import { ListItemNode, ListNode } from "@lexical/list"
+
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import { LinkNode } from "@lexical/link";
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 
-import ToolbarPlugin from './toolbar';
-import editorTheme from './editor-theme';
 import './styles.css';
-import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import editorTheme from './editor-theme';
+import ToolbarPlugin from './toolbar';
 
 const editorConfig = {
   // NOTE: This is critical for collaboration plugin to set editor state to null. It
@@ -19,7 +23,9 @@ const editorConfig = {
   editorState: null,
   namespace: 'React.js Collab Demo',
   nodes: [
-    LinkNode
+    LinkNode,
+    ListNode,
+    ListItemNode
   ],
   // Handling of errors during update
   onError(error: Error) {
@@ -44,8 +50,10 @@ export default function Editor() {
           placeholder={<Placeholder />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        <LinkPlugin />
         <AutoFocusPlugin />
+        <CheckListPlugin />
+        <ListPlugin />        
+        <LinkPlugin />
       </div>
     </div>
     </LexicalComposer>

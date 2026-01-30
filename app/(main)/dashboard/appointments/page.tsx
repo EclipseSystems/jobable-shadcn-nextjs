@@ -78,7 +78,7 @@ function DataTable<TData, TValue>({
         <RowDensity density={density} setDensity={(density: string) => setDensity(density)}/>
         <DataTableViewOptions table={table} />
       </div>
-      <CustomTable table={table} density={density} />
+      <CustomTable colLength={columns.length} table={table} density={density} />
       <DataTablePagination table={table} />
     </div>
   )

@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import {
   ArrowRight,
   Camera,
-  Check,
   CircleCheck,
   CircleX,
   DoorOpen,
@@ -24,16 +23,15 @@ import {
   LoaderCircle,
   Mail,
   MessageCircle,
-  Pencil,
   Phone,
   User,
   UserRoundCheck,
   Video,
-  X,
 } from "lucide-react";
 
-import { EditableCell } from "./editable-cell";
 import { TaskActions } from "@/app/(main)/dashboard/tasks/_components/task-actions";
+import { EditableCell } from "./editable-cell";
+import { EditCellActions } from "./edit-cell-actions";
 
 export type Appointments = {
   id: number;
@@ -179,28 +177,25 @@ export const leadColumns: ColumnDef<Leads>[] = [
     ),
   },
   { accessorKey: "id", header: "ID" },
-  { accessorKey: "name", header: "Name" },
+  { accessorKey: "name", header: "Name", meta: { type: 'text' }},
   {
     accessorKey: "status",
     header: "Lead status",
     cell: ({ row }) => {
       return (
-        <Badge
-          variant={
-            row.getValue("status") === "To convert" ? "outline" : "default"
-          }
-        >
+        <Badge variant={row.getValue("status") === "To convert" ? "outline" : "default"}>
           {row.getValue("status")}
         </Badge>
       );
     },
+    meta: { type: 'select' }
   },
-  { accessorKey: "street", header: "Street address" },
-  { accessorKey: "suburb", header: "Suburb" },
-  { accessorKey: "state", header: "State" },
-  { accessorKey: "postcode", header: "Postcode" },
-  { accessorKey: "email", header: "Email adddress" },
-  { accessorKey: "phone", header: "Phone number" },
+  { accessorKey: "street", header: "Street address", meta: { type: 'text' }},
+  { accessorKey: "suburb", header: "Suburb", meta: { type: 'text' }},
+  { accessorKey: "state", header: "State", meta: { type: 'select' }},
+  { accessorKey: "postcode", header: "Postcode", meta: { type: 'text' }},
+  { accessorKey: "email", header: "Email adddress", meta: { type: 'text' }},
+  { accessorKey: "phone", header: "Phone number", meta: { type: 'text' }},
   {
     id: "actions",
     cell: ({ row }) => {
@@ -268,12 +263,13 @@ export const orgColumns: ColumnDef<Organisations>[] = [
     enableHiding: false,
   },
   { accessorKey: "id", header: "ID" },
-  { accessorKey: "companyName", header: "Company name" },
-  { accessorKey: "tradingAs", header: "Trading as" },
-  { accessorKey: "city", header: "City" },
-  { accessorKey: "sector", header: "Sector" },
-  { accessorKey: "noOfEmp", header: "Employees" },
-  { accessorKey: "mainContact", header: "Main contact" }
+  { accessorKey: "companyName", header: "Company name", cell: EditableCell },
+  { accessorKey: "tradingAs", header: "Trading as", cell: EditableCell },
+  { accessorKey: "city", header: "City", cell: EditableCell },
+  { accessorKey: "sector", header: "Sector", cell: EditableCell },
+  { accessorKey: "noOfEmp", header: "Employees", cell: EditableCell },
+  { accessorKey: "mainContact", header: "Main contact", cell: EditableCell },
+  { id: "actions", cell: EditCellActions }
 ]
 
 // - - TASKS - -

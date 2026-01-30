@@ -13,9 +13,11 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { flexRender, Table as TanstackTable } from "@tanstack/react-table";
 
 export function CustomTable<T>({
+  colLength,
   table,
   density,
 }: {
+  colLength: number;
   table: TanstackTable<T>;
   density?: string;
 }) {
@@ -108,7 +110,7 @@ export function CustomTable<T>({
           ) : (
             <TableRow>
               <TableCell
-                colSpan={table.getAllColumns.length}
+                colSpan={colLength}
                 className="h-24 text-center"
               >
                 No results.

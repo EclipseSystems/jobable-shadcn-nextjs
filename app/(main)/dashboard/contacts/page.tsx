@@ -1,8 +1,9 @@
-import { PageTitle } from "@/components/layout/formatting"
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
+
+import { PageTitle } from "@/components/layout/formatting"
 
 export default function Page() {
   return (

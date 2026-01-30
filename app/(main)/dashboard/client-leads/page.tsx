@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import {
+  ColumnFiltersState,
   getCoreRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
@@ -18,7 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DoorOpen, Mail, Plus, Table, UserRoundCheck } from "lucide-react";
+import { DoorOpen, Mail, Plus, Table, Upload, UserRoundCheck } from "lucide-react";
 
 import { leadColumns } from "@/components/data-table/columns";
 import leadData from "./_lib/data.json";
@@ -40,6 +43,7 @@ function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [columnFilters, setColumnFilters] =  useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [density, setDensity] = useState<string>("standard");
   const [rowSelection, setRowSelection] = useState({});
@@ -48,12 +52,16 @@ function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     state: {
+      columnFilters,
       columnVisibility,
       rowSelection,
       sorting,
@@ -63,15 +71,23 @@ function DataTable<TData, TValue>({
   return (
     <div className="space-y-2">
       <div className="flex gap-2">
+        {/* Left section */}
         <RowDensity density={density} setDensity={(density: string) => setDensity(density)}/>
         <DataTableViewOptions table={table} />
+        <FilterSheet table={table}/>
+
+        {/* Right section */}
         <Subscribe className="ml-auto" />
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant={"outline"}>Bulk actions</Button>
+            <Button
+              disabled={table.getSelectedRowModel().rows.length == 0}
+              variant={"outline"}
+            >Bulk actions</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem><UserRoundCheck />Assign leads to</DropdownMenuItem>
+            <DropdownMenuItem><Upload />Bulk import</DropdownMenuItem>
             <DropdownMenuItem><Table />Bulk update</DropdownMenuItem>
             <DropdownMenuItem><DoorOpen />Convert to client</DropdownMenuItem>
             <DropdownMenuItem><Mail />Send email</DropdownMenuItem>
@@ -79,7 +95,7 @@ function DataTable<TData, TValue>({
         </DropdownMenu>
         <CSVMenu data={data} fileName={`leads_${Date.now().toString()}`} />
       </div>
-      <CustomTable table={table} density={density} />
+      <CustomTable colLength={columns.length} table={table} density={density} />
       <DataTablePagination table={table} />
     </div>
   );
@@ -102,7 +118,7 @@ export default function Page() {
             >
               <Plus />
             </Button>
-            <FilterSheet />
+            
           </div>
           <DataTable columns={leadColumns} data={leadData} />
         </CardContent>

@@ -150,6 +150,12 @@ export function ResetPassword() {
             </>
           )}
 
+          {step === 1 && method === "key" && (
+            <>
+              <p className="text-sm">A new window will open for you to authenticate with your security key.</p>
+            </>
+          )}
+
           {/* 3. Set new password */}
           {step == 2 && (
             <div className="grid grid-cols-3 gap-6">

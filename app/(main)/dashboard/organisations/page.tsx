@@ -16,11 +16,13 @@ import { RowDensity } from "@/components/data-table/row-density";
 
 declare module "@tanstack/react-table" {
   interface TableMeta<TData> {
-    editRows: boolean
-    setEditRows: (editRows: boolean) => void;
+    editedRows: { [key: string]: boolean };
+    setEditedRows: (value: { [key: string]: boolean } | ((old: { [key: string]: boolean }) => { [key: string]: boolean })) => void;
+    revertData: (rowIndex: number, revert: boolean) => void;
     updateData: (rowIndex: number, columnId: string, value: string | number) => void
   }
 }
+// ((old: []) => ({...old, [row.id]: !old[row.id]})
 
 function DataTable<TData, TValue>({
   columns,
@@ -30,6 +32,10 @@ function DataTable<TData, TValue>({
   const [density, setDensity] = useState<string>("standard")
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
+  // Edit meta
+  const [thisData, setThisData] = useState(() => [orgData])
+  const [originalData, setOriginalData] = useState(() => [orgData])
+  const [editedRows, setEditedRows] = useState<{ [key: string]: boolean }>({})
 
   const table = useReactTable({
     data,
@@ -40,6 +46,35 @@ function DataTable<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
+    meta: {
+      editedRows,
+      setEditedRows,
+      revertData: (rowIndex: number, revert: boolean) => {
+        if (revert) {
+          setThisData((old) =>
+            old.map((row, index) =>
+              index === rowIndex ? originalData[rowIndex] : row
+            )
+          );
+        }
+        setOriginalData((old) =>
+          old.map((row, index) => (index === rowIndex ? thisData[rowIndex] : row))
+        );
+      },
+      updateData: (rowIndex: number, columnId: string, value: string | number) => {
+        setThisData((old) =>
+          old.map((row, index) => {
+            if (index === rowIndex) {
+              return {
+                ...old[rowIndex],
+                [columnId]: value,
+              };
+            }
+            return row;
+          })
+        );
+      },
+    },
     state: {
       columnVisibility,
       rowSelection,
@@ -52,7 +87,7 @@ function DataTable<TData, TValue>({
         <RowDensity density={density} setDensity={(density: string) => setDensity(density)} />
         <DataTableViewOptions table={table} />
       </div>
-      <CustomTable table={table} density={density} />
+      <CustomTable colLength={columns.length} table={table} density={density} />
       <DataTablePagination table={table} />
     </div>
   )

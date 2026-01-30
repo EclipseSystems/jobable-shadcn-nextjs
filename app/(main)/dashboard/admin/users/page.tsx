@@ -1,3 +1,5 @@
+import { createClient } from "@supabase/supabase-js";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,11 +13,14 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { tabs, users } from "./_lib/data";
+import { tabs } from "./_lib/data";
 import { CreateUser } from "./_components/create-user";
 import { Heading } from "@/components/layout/formatting";
 import { ImportUsers } from "./_components/import-users";
 import { UserActions } from "./_components/user-actions";
+
+const supabase = createClient('https://ssotyzpozkqtorkecznm.supabase.co', 'sb_publishable_lpD6iG5tC9Wi3v_VFfBVSg_tR2AFyjT')
+const { data: { users }, error } = await supabase.auth.admin.listUsers();
 
 export default function Page() {
   return (
@@ -47,7 +52,7 @@ export default function Page() {
               <CreateUser />
               <ImportUsers />
             </div>
-            <Table className="w-full">
+            {/* <Table className="w-full">
               <TableHeader>
                 <TableRow>
                   <TableHead>User name</TableHead>
@@ -58,11 +63,11 @@ export default function Page() {
               </TableHeader>
               <TableBody>
                 {users.map((user) => (
-                  <TableRow key={user.name}>
+                  <TableRow key={user.id}>
                     <TableCell className="flex items-center gap-3">
-                      <Avatar>
+                      <Avatar> */}
                         {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-                        <AvatarFallback>
+                        {/* <AvatarFallback>
                           {user.name.split(" ", 2)[0][0]}
                           {user.name.split(" ", 2)[1][0]}
                         </AvatarFallback>
@@ -81,7 +86,7 @@ export default function Page() {
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>
+            </Table> */}
           </TabsContent>
 
           <TabsContent

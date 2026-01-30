@@ -3,6 +3,17 @@
 import { useState } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 import { FormCanvas } from "@/components/form-builder/form-canvas";
 import { FormPalette } from "@/components/form-builder/form-palette";
@@ -44,10 +55,32 @@ export default function Page() {
           <div className="space-y-4">
             <div className="flex gap-2 items-center">
               <PageTitle title="Forms" />
-              <Button variant="destructive" className="ml-auto">Restart</Button>
+              <AlertDialog>
+                <AlertDialogTrigger className="ml-auto">
+                  <Button variant="destructive">
+                    Restart
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Any unsaved progress will be lost; this action cannot be undone. 
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => setFields([])}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Button variant="outline">Load form <ChevronDown/></Button>
+                  <Button variant="outline">Load form <ChevronDown /></Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem></DropdownMenuItem>

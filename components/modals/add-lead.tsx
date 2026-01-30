@@ -27,13 +27,13 @@ export function AddLead({ isOpen, onClose }: AddLeadProps) {
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent>
+        <DialogContent className="min-w-1/2">
           <DialogHeader>
             <DialogTitle>Add lead</DialogTitle>
           </DialogHeader>
           {/* Main content */}
           <FieldSet>
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-4">
               <div className="col-span-1">
                 <FieldGroup>
                   <Field>

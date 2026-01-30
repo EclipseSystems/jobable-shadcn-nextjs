@@ -18,14 +18,13 @@ import {
 } from "lucide-react";
 
 import { AddAppointment } from "../modals/add-appointment";
-import { AddClient } from "../modals/add-client";
 import { AddContact } from "../modals/add-contact";
 import { AddLead } from "../modals/add-lead";
 import { AddOrganisation } from "../modals/add-organisation";
+import Link from "next/link";
 
 export function NewItem() {
   const [apptOpen, setApptOpen] = useState(false);
-  const [clientOpen, setClientOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [leadOpen, setLeadOpen] = useState(false);
   const [orgOpen, setOrgOpen] = useState(false);
@@ -36,7 +35,6 @@ export function NewItem() {
       name: "New appointment",
       action: () => setApptOpen(true),
     },
-    { icon: User, name: "New client", action: () => setClientOpen(true) },
     { icon: Tag, name: "New contact", action: () => setContactOpen(true) },
     { icon: Binoculars, name: "New lead", action: () => setLeadOpen(true) },
     { icon: Globe, name: "New organisation", action: () => setOrgOpen(true) },
@@ -51,6 +49,13 @@ export function NewItem() {
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <Link href="/dashboard/create-client">
+            <DropdownMenuItem key="New client">
+              <User />
+              <span>New client</span>
+            </DropdownMenuItem>
+          </Link>
+
           {addItems.map((item) => (
             <DropdownMenuItem key={item.name} onClick={item.action}>
               <item.icon />
@@ -62,7 +67,6 @@ export function NewItem() {
 
       {/* Dialogs */}
       <AddAppointment isOpen={apptOpen} onClose={() => setApptOpen(false)} />
-      <AddClient isOpen={clientOpen} onClose={() => setClientOpen(false)} />
       <AddContact isOpen={contactOpen} onClose={() => setContactOpen(false)} />
       <AddLead isOpen={leadOpen} onClose={() => setLeadOpen(false)} />
       <AddOrganisation isOpen={orgOpen} onClose={() => setOrgOpen(false)} />

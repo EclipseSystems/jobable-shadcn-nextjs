@@ -18,6 +18,8 @@ export default {
   link: 'editor-link',
   list: {
     listitem: 'editor-listitem',
+    listitemChecked: 'editor-listItemChecked',
+    listitemUnchecked: 'editor-listItemUnchecked',
     nested: {
       listitem: 'editor-nested-listitem',
     },

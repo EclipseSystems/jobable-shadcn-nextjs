@@ -24,17 +24,23 @@ const presetColors = [
   "#64748b", // gray
 ];
 
-export function MiniColorPicker() {
-  const [color, setColor] = useState("#3b82f6");
+interface MinColorProps {
+  defaultColor: string;
+}
+
+export function MiniColorPicker({ defaultColor }: MinColorProps) {
+  const [color, setColor] = useState(defaultColor);
+
   const onPresetSelect = useCallback((presetColor: string) => {
     setColor(presetColor);
   }, []);
+  
   return (
     <ColorPicker
       value={color}
       onValueChange={setColor}
       defaultFormat="hex"
-      defaultValue="#3b82f6"
+      defaultValue={"#3b82f6"}
     >
       <ColorPickerTrigger asChild>
         <ColorPickerSwatch className="size-5"/>

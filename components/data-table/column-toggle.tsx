@@ -49,12 +49,11 @@ export function DataTableViewOptions<TData>({
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
-          .filter(column => column.getCanHide())
+          .filter(column => column.getCanHide() && column.getCanFilter())
           .map(column => {
             if (searchQuery && !column.id.toLowerCase().includes(searchQuery.toLowerCase())) {
               return null
             }
-
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}
@@ -63,7 +62,7 @@ export function DataTableViewOptions<TData>({
                 onCheckedChange={value => column.toggleVisibility(!!value)}
                 onSelect={e => e.preventDefault()}
               >
-                {column.id}
+                {column.columnDef.header?.toString()}
               </DropdownMenuCheckboxItem>
             )
           })}

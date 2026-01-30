@@ -18,7 +18,7 @@ export function AddClient({ isOpen, onClose }: AddClientProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Create new client</DialogTitle>
         </DialogHeader>
         <DialogFooter>
           <DialogClose>

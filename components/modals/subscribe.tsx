@@ -1,4 +1,3 @@
-import { RadioBadgeGroup } from "../custom/radio-badge-group";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -18,6 +17,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+
+import { frequencies } from "@/lib/options";
+import { RadioBadgeGroup } from "../custom/radio-badge-group";
 
 export function Subscribe({ className }: { className: string }) {
   return (
@@ -43,11 +45,9 @@ export function Subscribe({ className }: { className: string }) {
                     <SelectValue placeholder="Select frequency..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="hourly">Hourly</SelectItem>
-                    <SelectItem value="daily">Daily</SelectItem>
-                    <SelectItem value="weekly">Weekly</SelectItem>
-                    <SelectItem value="fortnightly">Fortnightly</SelectItem>
-                    <SelectItem value="monthly">Monthly</SelectItem>
+                    {frequencies.map((option) => (
+                      <SelectItem value={option.value}>{option.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </Field>
@@ -61,11 +61,9 @@ export function Subscribe({ className }: { className: string }) {
               <SelectValue placeholder="Select frequency..." />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="hourly">Hourly</SelectItem>
-              <SelectItem value="daily">Daily</SelectItem>
-              <SelectItem value="weekly">Weekly</SelectItem>
-              <SelectItem value="fortnightly">Fortnightly</SelectItem>
-              <SelectItem value="monthly">Monthly</SelectItem>
+              {frequencies.map((option) => (
+                <SelectItem value={option.value}>{option.name}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <DialogFooter>

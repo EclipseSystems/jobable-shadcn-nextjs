@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+// Import Supabase
+import { createClient } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
 import { formatDateRange } from "little-date";
 
 import { Button } from "@/components/ui/button";
@@ -23,11 +25,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Phone, User } from "lucide-react";
+import { toast } from "sonner";
+import { Toaster } from "../ui/sonner";
 
 interface AddApptProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const supabase = createClient(
+  "https://ssotyzpozkqtorkecznm.supabase.co",
+  "sb_publishable_lpD6iG5tC9Wi3v_VFfBVSg_tR2AFyjT",
+);
 
 const clientData = [
   { value: "1", label: "Anna Ward" },
@@ -60,111 +69,131 @@ const events = [
   },
 ];
 
+async function fetchClients() {
+  const { data, error } = await supabase.from("clients").select('id, first_name, last_name');
+  if (error) {
+    toast.error("Error fetching clients");
+    return [];
+  }
+  return data.map((client: any) => ({
+    value: client.id.toString(),
+    label: `${client.first_name} ${client.last_name}`,
+  }));
+}
+
 export function AddAppointment({ isOpen, onClose }: AddApptProps) {
   const [thisDate, setThisDate] = useState<Date | undefined>(new Date());
+  const [clients, setClients] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    fetchClients().then((data) => setClients(data));
+  }, []);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="min-w-1/2">
-        <DialogHeader>
-          <DialogTitle>Create new appointment</DialogTitle>
-        </DialogHeader>
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="min-w-1/2">
+          <DialogHeader>
+            <DialogTitle>Create new appointment</DialogTitle>
+          </DialogHeader>
 
-        {/* Main content */}
-        <div className="grid grid-cols-3 w-full">
-          <div className="col-span-2">
-            <FieldSet>
-              <FieldGroup>
-                <Field>
-                  <FieldLabel>Client name</FieldLabel>
-                  <Combobox
-                    data={clientData}
-                    placeholder={"Select a client..."}
-                    searchHint={"Search clients..."}
-                  />
-                </Field>
-                <Field>
-                  <FieldLabel>Appointment date</FieldLabel>
-                  <Input
-                    value={thisDate?.toISOString().split("T")[0]}
-                    onChange={(e) => setThisDate(new Date(e.target.value))}
-                    type="date"
-                  />
-                </Field>
-                <div className="grid grid-cols-2 w-full gap-2">
+          {/* Main content */}
+          <div className="grid grid-cols-3 w-full">
+            <div className="col-span-2">
+              <FieldSet>
+                <FieldGroup>
                   <Field>
-                    <FieldLabel>Start time</FieldLabel>
-                    <Input type="time" />
+                    <FieldLabel>Client name</FieldLabel>
+                    <Combobox
+                      data={clients}
+                      placeholder={"Select a client..."}
+                      searchHint={"Search clients..."}
+                    />
                   </Field>
                   <Field>
-                    <FieldLabel>End time</FieldLabel>
-                    <Input type="time" />
+                    <FieldLabel>Appointment date</FieldLabel>
+                    <Input
+                      value={thisDate?.toISOString().split("T")[0]}
+                      onChange={(e) => setThisDate(new Date(e.target.value))}
+                      type="date"
+                    />
                   </Field>
-                </div>
-
-                <Field>
-                  <FieldLabel>Appointment method</FieldLabel>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a method" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="phone">
-                        <Phone />
-                        Phone
-                      </SelectItem>
-                      <SelectItem value="face">
-                        <User />
-                        Face-to-face
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FieldGroup>
-            </FieldSet>
-          </div>
-
-          {/* Appointment helper */}
-          <div className="col-span-1">
-            <div className="flex flex-col items-start gap-3 px-4">
-              <div className="flex w-full items-center justify-between px-1">
-                <div className="text-sm font-medium">
-                  {thisDate?.toLocaleDateString("en-US", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </div>
-              </div>
-              <div className="flex w-full flex-col gap-2">
-                {events.map((event) => (
-                  <div
-                    key={event.title}
-                    className="bg-muted after:bg-primary/70 relative rounded-md p-2 pl-6 text-sm after:absolute after:inset-y-2 after:left-2 after:w-1 after:rounded-full"
-                  >
-                    <div className="font-medium">{event.title}</div>
-                    <div className="text-muted-foreground text-xs">
-                      {formatDateRange(
-                        new Date(event.from),
-                        new Date(event.to)
-                      )}
-                    </div>
+                  <div className="grid grid-cols-2 w-full gap-2">
+                    <Field>
+                      <FieldLabel>Start time</FieldLabel>
+                      <Input type="time" />
+                    </Field>
+                    <Field>
+                      <FieldLabel>End time</FieldLabel>
+                      <Input type="time" />
+                    </Field>
                   </div>
-                ))}
+
+                  <Field>
+                    <FieldLabel>Appointment method</FieldLabel>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a method" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="phone">
+                          <Phone />
+                          Phone
+                        </SelectItem>
+                        <SelectItem value="face">
+                          <User />
+                          Face-to-face
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </FieldGroup>
+              </FieldSet>
+            </div>
+
+            {/* Appointment helper */}
+            <div className="col-span-1">
+              <div className="flex flex-col items-start gap-3 px-4">
+                <div className="flex w-full items-center justify-between px-1">
+                  <div className="text-sm font-medium">
+                    {thisDate?.toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </div>
+                </div>
+                <div className="flex w-full flex-col gap-2">
+                  {events.map((event) => (
+                    <div
+                      key={event.title}
+                      className="bg-muted after:bg-primary/70 relative rounded-md p-2 pl-6 text-sm after:absolute after:inset-y-2 after:left-2 after:w-1 after:rounded-full"
+                    >
+                      <div className="font-medium">{event.title}</div>
+                      <div className="text-muted-foreground text-xs">
+                        {formatDateRange(
+                          new Date(event.from),
+                          new Date(event.to),
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <DialogFooter>
-          <DialogClose>
-            <Button variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button type="submit">Submit</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <DialogClose>
+              <Button variant="outline" onClick={onClose}>
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button type="submit">Submit</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Toaster />
+    </>
   );
 }
